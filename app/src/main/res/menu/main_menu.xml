@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <item android:id="@+id/add_receipt"
         android:title="@string/add_receipt_text"
@@ -11,13 +11,13 @@
         app:showAsAction="always" />
     <item android:id="@+id/search_receipt"
         android:title="@string/search_receipt_text"
-        android:icon="@android:drawable/ic_search_category_default"
+        android:icon="@drawable/ic_file_find"
         android:orderInCategory="200"
         app:showAsAction="always" />
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
-        android:icon="@android:drawable/ic_menu_manage"
-        android:orderInCategory="100"
+        android:icon="@drawable/ic_settings"
+        android:orderInCategory="300"
         app:showAsAction="always" />
 
 </menu>

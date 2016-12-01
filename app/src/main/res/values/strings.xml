@@ -3,4 +3,5 @@
     <string name="add_receipt_text">Añadir Receta</string>
     <string name="search_receipt_text">Buscar</string>
     <string name="action_settings">Configuración</string>
+    <string name="title_activity_list_receipt">ListReceipt</string>
 </resources>
