@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:src="@drawable/flecha" />
+    <TextView
+        android:id="@+id/tv_cantidad"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="Num"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/tv_name_ingrediente"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="Ingrediente"
+        android:gravity="left|center"/>
+
+</LinearLayout>
