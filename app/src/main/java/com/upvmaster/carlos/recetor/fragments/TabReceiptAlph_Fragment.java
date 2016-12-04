@@ -10,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.activities.ViewReceipt_Activity;
 import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
+import com.upvmaster.carlos.recetor.entities.Ingrediente;
 import com.upvmaster.carlos.recetor.entities.Receipt;
 
 import java.util.ArrayList;
@@ -40,8 +42,9 @@ public class TabReceiptAlph_Fragment extends Fragment {
             public void onClick(View view) {
                 int pos = recyclerView.getChildAdapterPosition(view);
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-                vista_activity.setReceta(MockListaRecetas().get(pos));
+                Receipt r = MockListaRecetas().get(pos);
                 Intent i = new Intent(getContext(),vista_activity.getClass());
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
                 startActivity(i);
             }
         });
@@ -58,6 +61,21 @@ public class TabReceiptAlph_Fragment extends Fragment {
         Receipt r = new Receipt();
         r.setName("Alcachofas");
         r.setGroup(0);
+        List<Ingrediente> lista_ing = new ArrayList<Ingrediente>();
+        Ingrediente i = new Ingrediente();
+        i.setName("Alcachofa");
+        i.setCantidad(4);
+        lista_ing.add(i);
+        i = new Ingrediente();
+        i.setName("Sal");
+        i.setCantidad(0.5);
+        lista_ing.add(i);
+        r.setList_ingredients(lista_ing);
+        List<String> lista_pasos = new ArrayList<String>();
+        lista_pasos.add("Cocer las alcachofas");
+        lista_pasos.add("Echar sal a las alcachofas");
+        lista_pasos.add("Servir las alcachofas");
+        r.setList_steps(lista_pasos);
         lista.add(r);
         r = new Receipt();
         r.setName("Arroz a la Cubana");

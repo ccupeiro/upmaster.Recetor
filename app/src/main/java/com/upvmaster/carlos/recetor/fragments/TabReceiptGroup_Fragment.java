@@ -1,5 +1,6 @@
 package com.upvmaster.carlos.recetor.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.activities.ViewReceipt_Activity;
 import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.adapters.GroupAdapter;
 import com.upvmaster.carlos.recetor.entities.Receipt;
@@ -38,6 +41,12 @@ public class TabReceiptGroup_Fragment extends Fragment{
             @Override
             public void onClick(View view) {
                 //Llevar a ver el elemento
+                int pos = recyclerView.getChildAdapterPosition(view);
+                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                Receipt r = MockListaRecetas().get(pos);
+                Intent i = new Intent(getContext(),vista_activity.getClass());
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
+                startActivity(i);
             }
         });
         recyclerView.setAdapter(adaptador);

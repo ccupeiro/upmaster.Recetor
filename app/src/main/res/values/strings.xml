@@ -6,4 +6,5 @@
     <string name="title_activity_list_receipt">ListReceipt</string>
     <string name="text_tab_Group">Grupos</string>
     <string name="text_tab_Alph">Alfabético</string>
+    <string name="text.noReceta">Sin receta no se puede mostrar la información</string>
 </resources>
