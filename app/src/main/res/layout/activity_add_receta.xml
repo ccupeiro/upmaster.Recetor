@@ -59,45 +59,101 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="INGREDIENTES"/>
+                android:text="INGREDIENTES"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_ingredientes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </TableLayout>
+            <LinearLayout
+                android:id="@+id/ll_add_ingrediente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_plus"/>
+                <TextView
+                    android:id="@+id/tv_add_ingrediente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Añadir Ingrediente.."/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
             <TextView
-                android:id="@+id/tv_no_ingrendientes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="NO HAY INGREDIENTES"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PASOS"/>
+                android:text="PASOS"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_pasos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </TableLayout>
+            <LinearLayout
+                android:id="@+id/ll_add_paso"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_plus"/>
+                <TextView
+                    android:id="@+id/tv_add_paso"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Añadir Paso.."/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
             <TextView
-                android:id="@+id/tv_no_pasos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="NO HAY PASOS"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="VARIANTES"/>
+                android:text="VARIANTES"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_variantes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             </TableLayout>
+            <LinearLayout
+                android:id="@+id/ll_add_variante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="left">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/ic_plus"/>
+                <TextView
+                    android:id="@+id/tv_no_ingrendientes"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Añadir Ingrediente.."/>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

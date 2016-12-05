@@ -59,7 +59,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="INGREDIENTES"/>
+                android:text="INGREDIENTES"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_ingredientes"
                 android:layout_width="match_parent"
@@ -72,10 +73,17 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="NO HAY INGREDIENTES"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PASOS"/>
+                android:text="PASOS"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_pasos"
                 android:layout_width="match_parent"
@@ -88,10 +96,19 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="NO HAY PASOS"/>
+
+            <View
+                android:id="@+id/linea_pasos"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black"
+                android:layout_marginTop="@dimen/activity_vertical_margin"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VARIANTES"/>
+                android:text="VARIANTES"
+                android:layout_margin="@dimen/activity_vertical_margin"/>
             <TableLayout
                 android:id="@+id/tbl_variantes"
                 android:layout_width="match_parent"

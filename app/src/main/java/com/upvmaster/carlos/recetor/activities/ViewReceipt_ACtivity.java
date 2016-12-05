@@ -98,10 +98,7 @@ public class ViewReceipt_Activity extends AppCompatActivity {
             }
         }else{
             tl_variantes.setVisibility(View.GONE);
+            findViewById(R.id.linea_pasos).setVisibility(View.GONE);
         }
-    }
-
-    public void setReceta(Receipt receta) {
-        this.receta = receta;
     }
 }
