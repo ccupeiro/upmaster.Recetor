@@ -1,10 +1,12 @@
-package com.upvmaster.carlos.recetor;
+package com.upvmaster.carlos.recetor.activities;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TableLayout;
 import android.widget.TextView;
+
+import com.upvmaster.carlos.recetor.R;
 
 
 /**
