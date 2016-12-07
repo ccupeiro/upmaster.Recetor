@@ -6,6 +6,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="NoTitletheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="ItemToolbar">
+        <item name="android:background">?attr/selectableItemBackgroundBorderless</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd">@dimen/small_margin</item>
+        <item name="android:layout_marginStart">@dimen/small_margin</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingStart">@dimen/small_margin</item>
+        <item name="android:paddingEnd">@dimen/small_margin</item>
+    </style>
+
     <style name="ButtonStyle">
         <item name="android:background">@drawable/mibutton</item>
         <item name="android:padding">10dp</item>

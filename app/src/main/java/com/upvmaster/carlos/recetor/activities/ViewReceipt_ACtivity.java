@@ -1,7 +1,9 @@
 package com.upvmaster.carlos.recetor.activities;
 
+import android.app.Activity;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TableLayout;
@@ -20,12 +22,14 @@ import java.util.List;
 public class ViewReceipt_Activity extends AppCompatActivity {
     public static final String ID_RECETA = "receta";
     private Receipt receta;
-
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receta);
+        activity = this;
+        inicializarToolbar();
         String jsonReceta="";
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
@@ -100,5 +104,58 @@ public class ViewReceipt_Activity extends AppCompatActivity {
             tl_variantes.setVisibility(View.GONE);
             findViewById(R.id.linea_pasos).setVisibility(View.GONE);
         }
+    }
+    private void inicializarToolbar(){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+        }
+        //Titulo
+        TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
+        tv_titulo.setText("Añadir Receta");
+        // Icono atrás
+        ImageView iv_atras = (ImageView) findViewById(R.id.iv_atras);
+        iv_atras.setVisibility(View.VISIBLE);
+        iv_atras.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Dialogo para salir sin guardar
+                Toast.makeText(getApplicationContext(),"NO GUARDO",Toast.LENGTH_SHORT).show();
+                activity.finish();
+            }
+        });
+        // Guardar
+        ImageView iv_save = (ImageView) findViewById(R.id.iv_guardar);
+        iv_save.setVisibility(View.GONE);
+        //Add Receipt
+        ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
+        iv_add.setVisibility(View.GONE);
+        //find
+        ImageView iv_find = (ImageView) findViewById(R.id.iv_find);
+        iv_find.setVisibility(View.VISIBLE);
+        iv_find.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzar_find(view);
+            }
+        });
+        //config
+        ImageView iv_config = (ImageView) findViewById(R.id.iv_config);
+        iv_config.setVisibility(View.VISIBLE);
+        iv_config.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzar_config(view);
+            }
+        });
+    }
+
+    private void lanzar_config(View view) {
+        Toast.makeText(this,"Configurar",Toast.LENGTH_SHORT).show();
+    }
+
+    private void lanzar_find(View view) {
+        Toast.makeText(this,"Buscador",Toast.LENGTH_SHORT).show();
     }
 }

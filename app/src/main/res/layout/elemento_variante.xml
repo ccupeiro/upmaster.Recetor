@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:src="@drawable/flecha" />
+        android:src="@mipmap/ic_chevron_right_black_18dp" />
     <TextView
         android:id="@+id/tv_variante"
         android:layout_width="match_parent"
