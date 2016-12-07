@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#5e7974</color>
     <color name="colorPrimaryDark">#2D4B45</color>
-    <color name="colorAccent">#D9C277</color>
+    <color name="colorAccent">#B48C92</color>
     <color name="gradient_pressed_ini">#345953</color>
     <color name="gradient_pressed_fin">#689a92</color>
     <color name="gradient_shape_ini">#8dbab3</color>

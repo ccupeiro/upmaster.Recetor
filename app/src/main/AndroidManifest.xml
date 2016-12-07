@@ -18,7 +18,8 @@
         <activity
             android:name=".activities.ListReceipt_Activity"
             android:label="@string/title_activity_list_receipt" />
-        <activity android:name=".activities.ViewReceipt_Activity"></activity>
+        <activity android:name=".activities.ViewReceipt_Activity"/>
+        <activity android:name=".activities.AddReceipt_Activity"/>
     </application>
 
 </manifest>
