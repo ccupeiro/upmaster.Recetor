@@ -1,4 +1,4 @@
-package com.upvmaster.carlos.recetor.dao;
+package com.upvmaster.carlos.recetor.bbdd;
 
 /**
  * Created by Carlos on 07/12/2016.

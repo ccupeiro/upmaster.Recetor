@@ -1,13 +1,17 @@
 package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,9 +19,16 @@ import android.widget.Toast;
 
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.adapters.ViewTabAdapter;
+import com.upvmaster.carlos.recetor.bbdd.DBHelper;
+import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
+import com.upvmaster.carlos.recetor.entities.Receipt;
+
+import java.util.List;
 
 public class ListReceipt_Activity extends AppCompatActivity {
 
+    private List<Receipt> alph_list;
+    private List<Receipt> group_list;
     private Activity activity;
 
     @Override
@@ -26,6 +37,10 @@ public class ListReceipt_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_list_receipt);
         activity = this;
         inicializarToolbar();
+
+    }
+
+    private void inicialirTabs(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Alph)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Group)));
@@ -103,6 +118,14 @@ public class ListReceipt_Activity extends AppCompatActivity {
         });
     }
 
+    public List<Receipt> getAlph_list() {
+        return alph_list;
+    }
+
+    public List<Receipt> getGroup_list() {
+        return group_list;
+    }
+
     private void lanzar_config(View view) {
         Toast.makeText(this,"Configurar",Toast.LENGTH_SHORT).show();
     }
@@ -114,5 +137,47 @@ public class ListReceipt_Activity extends AppCompatActivity {
     private void lanzarAdd(View view){
         Intent intent = new Intent(this,AddReceipt_Activity.class);
         startActivity(intent);
+    }
+
+    private class GETListTask extends AsyncTask<Void,Void,Boolean>{
+
+
+        private ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(activity);
+            pd.setCancelable(false);
+            pd.setMessage("Cargando listas");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            SQLiteDatabase db = DBHelper.getDatabase(activity);
+            try {
+                ReceiptDao dao = new ReceiptDao(db);
+                alph_list = dao.getAlphList();
+                group_list = dao.getGroupList();
+                return true;
+            } catch (Exception e) {
+                Log.e(getClass().getName(),e.getMessage(),e);
+            } finally {
+                db.close();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean resul) {
+            if(alph_list!=null && group_list!=null && resul){
+                inicialirTabs();
+            }else{
+                Toast.makeText(getApplicationContext()
+                        ,"No se han cargado las listas! Error"
+                        ,Toast.LENGTH_LONG).show();
+                activity.finish();
+            }
+        }
     }
 }

@@ -1,4 +1,4 @@
-package com.upvmaster.carlos.recetor.dao;
+package com.upvmaster.carlos.recetor.bbdd;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

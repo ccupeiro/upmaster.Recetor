@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.activities.ListReceipt_Activity;
 import com.upvmaster.carlos.recetor.activities.ViewReceipt_Activity;
 import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.entities.Ingrediente;
@@ -36,13 +37,13 @@ public class TabReceiptAlph_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vistaTab =   inflater.inflate(R.layout.tab_receipt_alphabetic,container,false);
         recyclerView = (RecyclerView) vistaTab.findViewById(R.id.rv_recetas_alph);
-        adaptador = new AlphabeticAdapter(vistaTab.getContext(),MockListaRecetas());
+        adaptador = new AlphabeticAdapter(vistaTab.getContext(),((ListReceipt_Activity)getActivity()).getAlph_list());
         adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int pos = recyclerView.getChildAdapterPosition(view);
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-                Receipt r = MockListaRecetas().get(pos);
+                Receipt r = ((ListReceipt_Activity)getActivity()).getAlph_list().get(pos);
                 Intent i = new Intent(getContext(),vista_activity.getClass());
                 i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
                 startActivity(i);
@@ -52,47 +53,6 @@ public class TabReceiptAlph_Fragment extends Fragment {
         layoutManager = new LinearLayoutManager(vistaTab.getContext());
         recyclerView.setLayoutManager(layoutManager);
         return vistaTab;
-    }
-
-
-
-    private List<Receipt> MockListaRecetas(){
-        List<Receipt> lista = new ArrayList<Receipt>();
-        Receipt r = new Receipt();
-        r.setName("Alcachofas");
-        r.setGroup(0);
-        List<Ingrediente> lista_ing = new ArrayList<Ingrediente>();
-        Ingrediente i = new Ingrediente();
-        i.setName("Alcachofa");
-        i.setCantidad(4);
-        lista_ing.add(i);
-        i = new Ingrediente();
-        i.setName("Sal");
-        i.setCantidad(0.5);
-        lista_ing.add(i);
-        r.setList_ingredients(lista_ing);
-        List<String> lista_pasos = new ArrayList<String>();
-        lista_pasos.add("Cocer las alcachofas");
-        lista_pasos.add("Echar sal a las alcachofas");
-        lista_pasos.add("Servir las alcachofas");
-        r.setList_steps(lista_pasos);
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Arroz a la Cubana");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Brownie");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Canelones");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Pizza");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Puré Calabacín");
-        lista.add(r);
-        return lista;
     }
 
 

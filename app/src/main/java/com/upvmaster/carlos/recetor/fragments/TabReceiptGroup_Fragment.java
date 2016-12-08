@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.activities.ListReceipt_Activity;
 import com.upvmaster.carlos.recetor.activities.ViewReceipt_Activity;
 import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.adapters.GroupAdapter;
@@ -36,14 +37,14 @@ public class TabReceiptGroup_Fragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         vistaTab =   inflater.inflate(R.layout.tab_receipt_group,container,false);
         recyclerView = (RecyclerView) vistaTab.findViewById(R.id.rv_recetas_group);
-        adaptador = new GroupAdapter(vistaTab.getContext(),MockListaRecetas());
+        adaptador = new GroupAdapter(vistaTab.getContext(),((ListReceipt_Activity)getActivity()).getGroup_list());
         adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Llevar a ver el elemento
                 int pos = recyclerView.getChildAdapterPosition(view);
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-                Receipt r = MockListaRecetas().get(pos);
+                Receipt r = ((ListReceipt_Activity)getActivity()).getGroup_list().get(pos);
                 Intent i = new Intent(getContext(),vista_activity.getClass());
                 i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
                 startActivity(i);
@@ -53,28 +54,5 @@ public class TabReceiptGroup_Fragment extends Fragment{
         layoutManager = new LinearLayoutManager(vistaTab.getContext());
         recyclerView.setLayoutManager(layoutManager);
         return vistaTab;
-    }
-
-    private List<Receipt> MockListaRecetas(){
-        List<Receipt> lista = new ArrayList<Receipt>();
-        Receipt r = new Receipt();
-        r.setName("Canelones");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Pizza");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Alcachofas");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Brownie");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Arroz a la Cubana");
-        lista.add(r);
-        r = new Receipt();
-        r.setName("Puré Calabacín");
-        lista.add(r);
-        return lista;
     }
 }
