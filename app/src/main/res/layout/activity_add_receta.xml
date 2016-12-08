@@ -34,12 +34,28 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="2">
-        <ImageView
-            android:id="@+id/iv_image"
+        <android.support.design.widget.CoordinatorLayout
+            android:id="@+id/cl_camara"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/logo"
-            android:layout_weight="2"/>
+            android:layout_weight="2">
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="top|end"
+                android:paddingEnd="0dp"
+                android:tint="@android:color/black"
+                style="@style/ItemToolbar"
+                android:layout_centerInParent="true"
+                android:layout_alignParentEnd="true"
+                android:src="@mipmap/ic_pencil_white_24dp"/>
+        </android.support.design.widget.CoordinatorLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
