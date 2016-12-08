@@ -37,6 +37,7 @@ public class ListReceipt_Activity extends AppCompatActivity {
         setContentView(R.layout.activity_list_receipt);
         activity = this;
         inicializarToolbar();
+        new GetListTask().execute();
 
     }
 
@@ -89,6 +90,9 @@ public class ListReceipt_Activity extends AppCompatActivity {
         // Guardar
         ImageView iv_save = (ImageView) findViewById(R.id.iv_guardar);
         iv_save.setVisibility(View.GONE);
+        //Edit Receipt
+        ImageView iv_edit = (ImageView) findViewById(R.id.iv_edit);
+        iv_edit.setVisibility(View.GONE);
         //Add Receipt
         ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
         iv_add.setVisibility(View.VISIBLE);
@@ -139,7 +143,7 @@ public class ListReceipt_Activity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private class GETListTask extends AsyncTask<Void,Void,Boolean>{
+    private class GetListTask extends AsyncTask<Void,Void,Boolean>{
 
 
         private ProgressDialog pd;
@@ -170,6 +174,8 @@ public class ListReceipt_Activity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Boolean resul) {
+            if(pd!=null)
+                pd.dismiss();
             if(alph_list!=null && group_list!=null && resul){
                 inicialirTabs();
             }else{

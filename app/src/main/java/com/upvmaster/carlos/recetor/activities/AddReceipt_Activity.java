@@ -2,9 +2,15 @@ package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
@@ -21,7 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.entities.Receipt;
 import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
+
+import java.io.File;
 
 /**
  * Created by carlos.cupeiro on 07/12/2016.
@@ -29,19 +38,26 @@ import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
 public class AddReceipt_Activity extends AppCompatActivity {
 
+    private static final int REQUEST_IMAGE_CAPTURE = 1;
+    private static final int REQUEST_IMAGE_GALLERY = 2;
+
     private TableLayout tl_ingredientes;
     private TableLayout tl_pasos;
     private TableLayout tl_variante;
     private EditText et_titulo;
+    private ImageView iv_imagen;
     private Activity activity;
     private int paso_sig=1;
+    private Receipt receta;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_receta);
         activity = this;
+        receta = new Receipt();
         inicializarToolbar();
+        //Titulo
         et_titulo = (EditText) findViewById(R.id.et_name_receipt);
         et_titulo.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -55,6 +71,18 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 return false;
             }
         });
+        //Foto
+        iv_imagen = (ImageView) findViewById(R.id.iv_image);
+        iv_imagen.setImageResource(R.drawable.logo);
+        CoordinatorLayout cl_foto = (CoordinatorLayout) findViewById(R.id.cl_camara);
+        cl_foto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                clickFoto(null);
+            }
+        });
+        //Grupo
+        //Tablas
         tl_ingredientes = (TableLayout) findViewById(R.id.tbl_ingredientes);
         tl_pasos = (TableLayout) findViewById(R.id.tbl_pasos);
         tl_variante = (TableLayout) findViewById(R.id.tbl_variantes);
@@ -112,6 +140,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"GUARDAR!!",Toast.LENGTH_SHORT).show();
             }
         });
+        //Edit Receipt
+        ImageView iv_edit = (ImageView) findViewById(R.id.iv_edit);
+        iv_edit.setVisibility(View.GONE);
         //Add Receipt
         ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
         iv_add.setVisibility(View.GONE);
@@ -121,6 +152,50 @@ public class AddReceipt_Activity extends AppCompatActivity {
         //config
         ImageView iv_config = (ImageView) findViewById(R.id.iv_config);
         iv_config.setVisibility(View.GONE);
+    }
+
+    private void clickFoto(View view){
+        //TODO pedir permiso de camara
+        Runnable runCaptura = new Runnable() {
+            @Override
+            public void run() {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                }
+            }
+        };
+
+        Runnable runGallery = new Runnable() {
+            @Override
+            public void run() {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent,REQUEST_IMAGE_GALLERY);
+            }
+        };
+
+    }
+
+    private void createAlertCamera(final Runnable runCapture, final Runnable runGallery){
+        AlertDialog.Builder mBuilderAlertDialog = new AlertDialog.Builder(getApplicationContext(), R.style.alert_dialog_gota);
+        mBuilderAlertDialog.setTitle("Foto");
+        mBuilderAlertDialog.setMessage("De donde quiere sacar la foto");
+        mBuilderAlertDialog.setCancelable(true);
+        //Falta conitnuar TODO FALTAAAA
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            iv_imagen.setImageBitmap(imageBitmap);
+        }
+        if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            iv_imagen.setImageBitmap(imageBitmap);
+        }
     }
 
     private void addIngrediente(View vista){

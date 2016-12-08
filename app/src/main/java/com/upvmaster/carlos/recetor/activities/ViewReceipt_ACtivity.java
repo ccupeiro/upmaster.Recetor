@@ -1,6 +1,8 @@
 package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,6 +19,7 @@ import com.upvmaster.carlos.recetor.entities.Ingrediente;
 import com.upvmaster.carlos.recetor.entities.Receipt;
 import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
+import java.io.File;
 import java.util.List;
 
 public class ViewReceipt_Activity extends AppCompatActivity {
@@ -41,7 +44,18 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         receta = new Gson().fromJson(jsonReceta,Receipt.class);
         //Foto
         ImageView iv_imagen = (ImageView) findViewById(R.id.iv_image);
-        //TODO falta por ver como gestionar las fotos
+        if(receta.getSrc_photo()!=null && !receta.getSrc_photo().equals("")){
+            //Hay foto
+            File imgFile = new File(receta.getSrc_photo());
+            if(imgFile.exists()){
+                Bitmap bmp = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                iv_imagen.setImageBitmap(bmp);
+            }else{
+                iv_imagen.setImageResource(R.drawable.logo);
+            }
+        }else{
+            iv_imagen.setImageResource(R.drawable.logo);
+        }
         //Titulo
         TextView tv_name = (TextView) findViewById(R.id.tv_name);
         tv_name.setText(receta.getName());
@@ -128,6 +142,15 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         // Guardar
         ImageView iv_save = (ImageView) findViewById(R.id.iv_guardar);
         iv_save.setVisibility(View.GONE);
+        //Edit Receipt
+        ImageView iv_edit = (ImageView) findViewById(R.id.iv_edit);
+        iv_edit.setVisibility(View.VISIBLE);
+        iv_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzar_edit(view);
+            }
+        });
         //Add Receipt
         ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
         iv_add.setVisibility(View.GONE);
@@ -157,5 +180,8 @@ public class ViewReceipt_Activity extends AppCompatActivity {
 
     private void lanzar_find(View view) {
         Toast.makeText(this,"Buscador",Toast.LENGTH_SHORT).show();
+    }
+    private void lanzar_edit(View view) {
+        Toast.makeText(this,"Editar",Toast.LENGTH_SHORT).show();
     }
 }

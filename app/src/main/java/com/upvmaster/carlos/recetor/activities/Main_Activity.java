@@ -76,6 +76,9 @@ public class Main_Activity extends AppCompatActivity {
         // Guardar
         ImageView iv_save = (ImageView) findViewById(R.id.iv_guardar);
         iv_save.setVisibility(View.GONE);
+        //Edit Receipt
+        ImageView iv_edit = (ImageView) findViewById(R.id.iv_edit);
+        iv_edit.setVisibility(View.GONE);
         //Add Receipt
         ImageView iv_add = (ImageView) findViewById(R.id.iv_add);
         iv_add.setVisibility(View.VISIBLE);
