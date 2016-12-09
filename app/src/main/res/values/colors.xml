@@ -12,9 +12,9 @@
 
     <!--PALETA POSIBLE!! -->
     <color name="posibles">#493F23</color>
-    <color name="posibles2">#F52509</color>
-    <color name="posibles3"> #E29C46</color>
-    <color name="posibles4">#EAD39D</color>
+    <color name="colorAccent_bis">#F52509</color>
+    <color name="colorPrimaryDark_bis">#E29C46</color>
+    <color name="colorPrimary_bis">#EAD39D</color>
     <color name="posibles5">#6C8F7D</color>
 
 </resources>

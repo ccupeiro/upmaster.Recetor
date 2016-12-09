@@ -2,6 +2,7 @@ package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -173,15 +174,27 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 startActivityForResult(galleryIntent,REQUEST_IMAGE_GALLERY);
             }
         };
-
+        createAlertCamera(runCaptura,runGallery);
     }
 
     private void createAlertCamera(final Runnable runCapture, final Runnable runGallery){
-        AlertDialog.Builder mBuilderAlertDialog = new AlertDialog.Builder(getApplicationContext(), R.style.alert_dialog_gota);
+        AlertDialog.Builder mBuilderAlertDialog = new AlertDialog.Builder(activity, R.style.alert_dialog_gota);
         mBuilderAlertDialog.setTitle("Foto");
         mBuilderAlertDialog.setMessage("De donde quiere sacar la foto");
         mBuilderAlertDialog.setCancelable(true);
-        //Falta conitnuar TODO FALTAAAA
+        mBuilderAlertDialog.setPositiveButton("Cámara", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                runCapture.run();
+            }
+        });
+        mBuilderAlertDialog.setNegativeButton("Galería", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                runGallery.run();
+            }
+        });
+        mBuilderAlertDialog.show();
     }
 
     @Override
@@ -189,6 +202,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //Guardar la foto
             iv_imagen.setImageBitmap(imageBitmap);
         }
         if (requestCode == REQUEST_IMAGE_GALLERY && resultCode == RESULT_OK) {
