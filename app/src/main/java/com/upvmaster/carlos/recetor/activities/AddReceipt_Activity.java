@@ -1,10 +1,12 @@
 package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -12,25 +14,30 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.bbdd.DBHelper;
+import com.upvmaster.carlos.recetor.bbdd.dao.GroupDao;
+import com.upvmaster.carlos.recetor.entities.Group;
 import com.upvmaster.carlos.recetor.entities.Receipt;
 import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
-import java.io.File;
+import java.util.List;
 
 /**
  * Created by carlos.cupeiro on 07/12/2016.
@@ -46,16 +53,18 @@ public class AddReceipt_Activity extends AppCompatActivity {
     private TableLayout tl_variante;
     private EditText et_titulo;
     private ImageView iv_imagen;
+    private Spinner sp_group;
     private Activity activity;
     private int paso_sig=1;
-    private Receipt receta;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_receta);
         activity = this;
-        receta = new Receipt();
+        //Grupo
+        sp_group = (Spinner) findViewById(R.id.spinner_group);
+        new GetGroupListTask().execute();
         inicializarToolbar();
         //Titulo
         et_titulo = (EditText) findViewById(R.id.et_name_receipt);
@@ -81,7 +90,6 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 clickFoto(null);
             }
         });
-        //Grupo
         //Tablas
         tl_ingredientes = (TableLayout) findViewById(R.id.tbl_ingredientes);
         tl_pasos = (TableLayout) findViewById(R.id.tbl_pasos);
@@ -136,8 +144,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Guardar la receta
-                //Recuperar todos los datos
-                Toast.makeText(getApplicationContext(),"GUARDAR!!",Toast.LENGTH_SHORT).show();
+                saveReceipt();
             }
         });
         //Edit Receipt
@@ -262,5 +269,90 @@ public class AddReceipt_Activity extends AppCompatActivity {
         //insertarlo en la tabla
         varianteRow.addView(varianteRowInterno);
         tl_variante.addView(varianteRow);
+    }
+
+    private void saveReceipt(){
+        //Recoger la info de la receta
+        Receipt receta =  new Receipt();
+
+        new SaveReceiptTask().execute(receta);
+    }
+
+    private class SaveReceiptTask extends AsyncTask<Receipt,Void,Boolean>{
+        private ProgressDialog pd;
+
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(activity);
+            pd.setCancelable(false);
+            pd.setMessage("Cargando listas");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Receipt... receipts) {
+            Toast.makeText(getApplicationContext(),"GUARDAR!!",Toast.LENGTH_SHORT).show();
+            return true;
+        }
+        @Override
+        protected void onPostExecute(Boolean resul) {
+            if(pd!=null)
+                pd.dismiss();
+            if(resul){
+                Toast.makeText(getApplicationContext()
+                        ,"Se ha guardado la receta"
+                        ,Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext()
+                        ,"No se ha guardado la receta! Error"
+                        ,Toast.LENGTH_LONG).show();
+            }
+            activity.finish();
+        }
+    }
+
+    private class GetGroupListTask extends AsyncTask<Void,Void,Boolean>{
+
+        private ProgressDialog pd;
+        private List<Group> list_group;
+
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(activity);
+            pd.setCancelable(false);
+            pd.setMessage("Cargando listas");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            SQLiteDatabase db = DBHelper.getDatabase(activity);
+            try {
+                GroupDao dao = new GroupDao(db);
+                list_group = dao.getAllGroups();
+                return true;
+            } catch (Exception e) {
+                Log.e(getClass().getName(),e.getMessage(),e);
+            } finally {
+                db.close();
+            }
+            return false;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean resul) {
+            if(pd!=null)
+                pd.dismiss();
+            if(list_group!=null && resul){
+                ArrayAdapter<Group> dataAdapter = new ArrayAdapter<>(activity,android.R.layout.simple_spinner_item,list_group);
+                dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                sp_group.setAdapter(dataAdapter);
+            }else{
+                Toast.makeText(getApplicationContext()
+                        ,"No se ha cargado la lista de grupos! Error"
+                        ,Toast.LENGTH_LONG).show();
+                activity.finish();
+            }
+        }
     }
 }
