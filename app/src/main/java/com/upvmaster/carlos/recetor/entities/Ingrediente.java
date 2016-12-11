@@ -4,13 +4,16 @@ package com.upvmaster.carlos.recetor.entities;
  * Created by Carlos on 03/12/2016.
  */
 public class Ingrediente {
+    private int id;
     private String name;
-    private double cantidad;
+    private String cantidad;
 
     public Ingrediente() {
+        id = -1;
     }
 
-    public Ingrediente(String name, double cantidad) {
+    public Ingrediente(String name, String cantidad) {
+        id=-1;
         this.name = name;
         this.cantidad = cantidad;
     }
@@ -19,23 +22,32 @@ public class Ingrediente {
         return name;
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    public double getCantidad() {
+    public String getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(double cantidad) {
+    public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
 
     @Override
     public String toString() {
         return "Ingrediente{" +
-                "name='" + name + '\'' +
-                ", cantidad=" + cantidad +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", cantidad='" + cantidad + '\'' +
                 '}';
     }
 }

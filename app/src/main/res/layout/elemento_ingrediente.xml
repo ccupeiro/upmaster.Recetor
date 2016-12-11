@@ -20,6 +20,9 @@
         android:id="@+id/tv_name_ingrediente"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scrollbars="vertical"
+        android:lines="2"
+        android:minLines="1"
         android:text="Ingrediente"
         android:gravity="left|center"/>
 

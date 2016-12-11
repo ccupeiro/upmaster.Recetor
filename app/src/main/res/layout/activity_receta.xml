@@ -1,8 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:contentInsetStart="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <include layout="@layout/toolbar" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,6 +51,8 @@
                 android:layout_height="match_parent"
                 android:text="Titulo Receta"
                 android:layout_weight="1"
+                android:lines="3"
+                android:minLines="1"
                 android:gravity="center"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -35,15 +63,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Grupo:"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:gravity="center"/>
                 <TextView
                     android:id="@+id/tv_grupo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="GRUPO AL QUE PERTENECE"
+                    android:lines="3"
+                    android:minLines="1"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|left"/>
+                    android:gravity="center_vertical"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -105,6 +135,7 @@
                 android:layout_marginTop="@dimen/activity_vertical_margin"/>
 
             <TextView
+                android:id="@+id/tv_variante_general"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="VARIANTES"

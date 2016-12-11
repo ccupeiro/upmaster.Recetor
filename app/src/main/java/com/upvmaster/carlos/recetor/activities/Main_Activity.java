@@ -1,16 +1,22 @@
 package com.upvmaster.carlos.recetor.activities;
 
 import android.animation.ObjectAnimator;
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,8 +25,13 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.bbdd.DBHelper;
+import com.upvmaster.carlos.recetor.bbdd.dao.GroupDao;
+import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
+import com.upvmaster.carlos.recetor.entities.Group;
 import com.upvmaster.carlos.recetor.entities.Ingrediente;
 import com.upvmaster.carlos.recetor.entities.Receipt;
+import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +40,14 @@ public class Main_Activity extends AppCompatActivity {
 
     private Button btn_recetas,btn_random,btn_dietas;
     private boolean animado=false;
+    private Activity activity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        activity = this;
+        new InitDBTask().execute();
         inicializarToolbar();
         ImageView img_logo = (ImageView) findViewById(R.id.img_logo);
         btn_recetas = (Button) findViewById(R.id.btn_recetas);
@@ -113,7 +127,8 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void lanzar_find(View view) {
-        Toast.makeText(this,"Buscador",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, Search_Activity.class);
+        startActivity(i);
     }
 
     private void lanzar_add(View view) {
@@ -126,32 +141,60 @@ public class Main_Activity extends AppCompatActivity {
         startActivity(i);
     }
     private void lanzar_Random(View vista){
-        ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-        Receipt r = getRecetaRandomMock();
-        Intent i = new Intent(this,vista_activity.getClass());
-        i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
-        startActivity(i);
+        new RandomReciptTask().execute();
     }
 
-    private Receipt getRecetaRandomMock(){
-        Receipt r = new Receipt();
-        r.setName("Alcachofas");
-        r.setGroup(0);
-        List<Ingrediente> lista_ing = new ArrayList<Ingrediente>();
-        Ingrediente i = new Ingrediente();
-        i.setName("Alcachofa");
-        i.setCantidad(4);
-        lista_ing.add(i);
-        i = new Ingrediente();
-        i.setName("Sal");
-        i.setCantidad(0.5);
-        lista_ing.add(i);
-        r.setList_ingredients(lista_ing);
-        List<String> lista_pasos = new ArrayList<String>();
-        lista_pasos.add("Cocer las alcachofas");
-        lista_pasos.add("Echar sal a las alcachofas");
-        lista_pasos.add("Servir las alcachofas");
-        r.setList_steps(lista_pasos);
-        return r;
+    private class InitDBTask extends  AsyncTask<Void,Void,Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            SQLiteDatabase db = DBHelper.getDatabase(activity);
+            return null;
+        }
+    }
+
+    private class RandomReciptTask extends AsyncTask<Void,Void,Boolean>{
+
+        private ProgressDialog pd;
+        private Receipt randomReceipt;
+
+        @Override
+        protected void onPreExecute() {
+            pd = new ProgressDialog(activity);
+            pd.setCancelable(false);
+            pd.setMessage("Cargando listas");
+            pd.show();
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            SQLiteDatabase db = DBHelper.getDatabase(activity);
+            try {
+                ReceiptDao dao = new ReceiptDao(db);
+                randomReceipt = dao.randomReceipt();
+                return true;
+            } catch (Exception e) {
+                Log.e(getClass().getName(),e.getMessage(),e);
+            } finally {
+                db.close();
+            }
+            return false;
+        }
+        @Override
+        protected void onPostExecute(Boolean resul) {
+            if(pd!=null)
+                pd.dismiss();
+            if(randomReceipt!=null && resul){
+                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                Intent i = new Intent(activity,vista_activity.getClass());
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
+                startActivity(i);
+            }else{
+                Toast.makeText(getApplicationContext()
+                        ,"No se ha cargado la receta Random! Error"
+                        ,Toast.LENGTH_LONG).show();
+                activity.finish();
+            }
+        }
     }
 }

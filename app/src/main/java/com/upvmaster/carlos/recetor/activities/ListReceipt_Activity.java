@@ -10,6 +10,8 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +19,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
+import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.adapters.ViewTabAdapter;
 import com.upvmaster.carlos.recetor.bbdd.DBHelper;
 import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
@@ -38,7 +42,6 @@ public class ListReceipt_Activity extends AppCompatActivity {
         activity = this;
         inicializarToolbar();
         new GetListTask().execute();
-
     }
 
     private void inicialirTabs(){
@@ -135,12 +138,18 @@ public class ListReceipt_Activity extends AppCompatActivity {
     }
 
     private void lanzar_find(View view) {
-        Toast.makeText(this,"Buscador",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, Search_Activity.class);
+        startActivity(i);
     }
 
     private void lanzarAdd(View view){
         Intent intent = new Intent(this,AddReceipt_Activity.class);
         startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     private class GetListTask extends AsyncTask<Void,Void,Boolean>{

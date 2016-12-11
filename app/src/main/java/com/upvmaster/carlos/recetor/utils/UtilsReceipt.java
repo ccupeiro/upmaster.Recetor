@@ -1,32 +1,62 @@
 package com.upvmaster.carlos.recetor.utils;
 
+import android.app.Activity;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
+import android.util.Log;
+
+import com.upvmaster.carlos.recetor.bbdd.DBHelper;
+import com.upvmaster.carlos.recetor.bbdd.dao.GroupDao;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
+
 /**
  * Created by Carlos on 03/12/2016.
  */
 
 public class UtilsReceipt {
 
-    public static String getGroupName(int group_id){
-        switch (group_id){
-            case 0:
-                return "Arroces";
-            case 1:
-                return "Caldos";
-            case 2:
-                return "Pastas";
-            case 3:
-                return "Verduras";
-            default:
-                return "Sin Grupo";
+    public static String getGroupName(int group_id, Context context){
+        SQLiteDatabase db = DBHelper.getDatabase(context);
+        try {
+            GroupDao dao = new GroupDao(db);
+            return dao.getName(group_id);
+        } catch (Exception e) {
+            Log.e("Utils - GetGroupName",e.getMessage(),e);
+        } finally {
+            db.close();
         }
-    }
-
-    public static String doubleToStringReceipt(double d){
-        //TODO ver como devolver la fracción si es menor que 0
-        return d+"";
+        return "--";
     }
     public static String getPaso(int paso){
         return paso+"º";
+    }
+    public static int getintFromPaso(String paso){
+        return Integer.parseInt(paso.replace("º",""));
+    }
+
+    public static void copiarBBDD(Activity activity) {
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+            String currentDBPath = "/data" + data.toString() + "/" + activity.getPackageName() + "/databases/recetor.sqlite";
+            String backupDBPath = "/Download/recetor.sqlite";
+            File currentDB = new File(currentDBPath);
+            File backupDB = new File(sd, backupDBPath);
+            if (currentDB.exists()) {
+                FileChannel src = new FileInputStream(currentDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+            }
+        } catch (Exception e) {
+            Log.e(UtilsReceipt.class.getName(),e.getMessage(),e);
+        }
     }
 
 }
