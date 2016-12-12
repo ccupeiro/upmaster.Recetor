@@ -82,10 +82,10 @@ public class Search_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int pos = recyclerView.getChildAdapterPosition(view);
-                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
+                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Receipt r = search_list.get(pos);
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(r));
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
                 startActivity(i);
             }
         });

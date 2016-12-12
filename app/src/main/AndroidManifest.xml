@@ -31,7 +31,7 @@
             android:label="@string/title_activity_list_receipt"
             android:screenOrientation="portrait"
             android:configChanges="orientation"/>
-        <activity android:name=".activities.View2Receipt_Activity"
+        <activity android:name=".activities.ViewReceipt_Activity"
             android:screenOrientation="portrait"
             android:configChanges="orientation"/>
         <activity android:name=".activities.AddReceipt_Activity"

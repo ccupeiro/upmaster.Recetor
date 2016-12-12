@@ -185,9 +185,9 @@ public class Main_Activity extends AppCompatActivity {
             if(pd!=null)
                 pd.dismiss();
             if(randomReceipt!=null && resul){
-                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
+                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
                 startActivity(i);
             }else{
                 Toast.makeText(getApplicationContext()

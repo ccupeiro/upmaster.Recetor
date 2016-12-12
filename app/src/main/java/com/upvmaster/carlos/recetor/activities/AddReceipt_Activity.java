@@ -634,9 +634,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
                         ,"Se ha guardado la receta"
                         ,Toast.LENGTH_LONG).show();
 
-                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
+                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(receta));
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta));
                 startActivity(i);
                 activity.finish();
             }else{
