@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.upvmaster.carlos.recetor">
+
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-feature android:name="android.hardware.camera"
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <uses-feature
+        android:name="android.hardware.camera"
         android:required="true" />
+
     <application
         android:allowBackup="true"
+        android:configChanges="orientation"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:screenOrientation="portrait"
         android:supportsRtl="true"
-        android:theme="@style/NoTitletheme"
-        android:configChanges="orientation"
-        android:screenOrientation="portrait">
+        android:theme="@style/NoTitletheme">
         <activity android:name=".activities.Main_Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,9 +29,11 @@
         <activity
             android:name=".activities.ListReceipt_Activity"
             android:label="@string/title_activity_list_receipt" />
-        <activity android:name=".activities.ViewReceipt_Activity"/>
-        <activity android:name=".activities.AddReceipt_Activity"/>
-        <activity android:name=".activities.Search_Activity"/>
+        <activity android:name=".activities.ViewReceipt_Activity" />
+        <activity android:name=".activities.AddReceipt_Activity" />
+        <activity android:name=".activities.Search_Activity" />
+        <activity android:name=".activities.Dieta_Activity"/>
+        <activity android:name=".activities.Preferencias_Activity"/>
     </application>
 
 </manifest>

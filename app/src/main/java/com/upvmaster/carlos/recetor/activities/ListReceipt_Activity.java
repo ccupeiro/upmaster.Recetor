@@ -134,7 +134,8 @@ public class ListReceipt_Activity extends AppCompatActivity {
     }
 
     private void lanzar_config(View view) {
-        Toast.makeText(this,"Configurar",Toast.LENGTH_SHORT).show();
+        Intent i = new Intent(this, Preferencias_Activity.class);
+        startActivity(i);
     }
 
     private void lanzar_find(View view) {

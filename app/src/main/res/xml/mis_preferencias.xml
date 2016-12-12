@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferencias_principal" >
+    <CheckBoxPreference
+        android:key="animaciones"
+        android:title="Animaciones"
+        android:defaultValue="true"
+        android:summary="Se reproduce las animaciones del inicio"/>
+    <CheckBoxPreference
+        android:key="sonidos"
+        android:title="Sonidos de actividad"
+        android:defaultValue="true"
+        android:summary="Se reproducen sonidos al interactuar con la aplicación"/>
+</PreferenceScreen>

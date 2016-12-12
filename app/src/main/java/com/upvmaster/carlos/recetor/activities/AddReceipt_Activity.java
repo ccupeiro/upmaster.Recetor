@@ -237,7 +237,18 @@ public class AddReceipt_Activity extends AppCompatActivity {
         iv_find.setVisibility(View.GONE);
         //config
         ImageView iv_config = (ImageView) findViewById(R.id.iv_config);
-        iv_config.setVisibility(View.GONE);
+        iv_config.setVisibility(View.VISIBLE);
+        iv_config.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzar_config(view);
+            }
+        });
+    }
+
+    private void lanzar_config(View view) {
+        Intent i = new Intent(this, Preferencias_Activity.class);
+        startActivity(i);
     }
 
     private void clickFoto(View view){
