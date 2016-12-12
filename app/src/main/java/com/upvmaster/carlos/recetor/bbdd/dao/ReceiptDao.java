@@ -92,7 +92,8 @@ public class ReceiptDao {
             if(c.moveToFirst()){
                 random = new Receipt();
                 random.setId(c.getInt(c.getColumnIndex(TReceipt.ID)));
-                random.setName(c.getString(c.getColumnIndex(TReceipt.NAME)));
+                String name = c.getString(c.getColumnIndex(TReceipt.NAME)).trim();
+                random.setName(Character.toUpperCase(name.charAt(0))+name.substring(1));
                 random.setGroup(c.getInt(c.getColumnIndex(TReceipt.GROUP)));
                 random.setSrc_photo(c.getString(c.getColumnIndex(TReceipt.IMAGE)));
                     //Ingredientes
@@ -161,6 +162,7 @@ public class ReceiptDao {
         if(c.moveToFirst()){
             do{
                 Ingrediente i = new Ingrediente();
+                i.setId(c.getInt(c.getColumnIndex(TIngredientes.ID)));
                 String name =c.getString(c.getColumnIndex(TIngredientes.NAME)).trim();
                 i.setName(Character.toUpperCase(name.charAt(0))+name.substring(1));
                 i.setCantidad(c.getString(c.getColumnIndex(TIngredientes.QUANTITY)));

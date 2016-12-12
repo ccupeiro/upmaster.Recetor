@@ -57,12 +57,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="RECETAS"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:drawableTop="@mipmap/ic_receipt_black_36dp"
+                android:drawableTint="@android:color/white"
                 style="@style/ButtonStyle"/>
             <Button
                 android:id="@+id/btn_comida_random"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="¿QUE COMER?"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:drawableTop="@mipmap/ic_food_fork_drink_black_36dp"
+                android:drawableTint="@android:color/white"
                 style="@style/ButtonStyle"
                 />
         </LinearLayout>
@@ -75,6 +81,9 @@
                 android:id="@+id/btn_dieta"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textAppearance="@android:style/TextAppearance.Medium"
+                android:drawableTop="@mipmap/ic_heart_pulse_black_36dp"
+                android:drawableTint="@android:color/white"
                 android:text="DIETA"
                 style="@style/ButtonStyle"/>
         </LinearLayout>

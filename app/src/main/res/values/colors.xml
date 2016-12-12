@@ -9,6 +9,7 @@
     <color name="gradient_shape_fin">#58857e</color>
     <color name="button_text_color">#ffffff</color>
     <color name="greyDark">#424242</color>
+    <color name="cabecera">#bebbbb</color>
 
     <!--PALETA POSIBLE!! -->
     <color name="posibles">#493F23</color>

@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:weightSum="10">
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -31,57 +33,67 @@
     </android.support.design.widget.AppBarLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="3"
         android:orientation="horizontal"
-        android:layout_weight="2">
+        android:weightSum="4">
+
         <ImageView
             android:id="@+id/iv_image"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/logo"
-            android:layout_weight="2"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:scaleType="centerInside"
+            android:layout_weight="1"
+            android:src="@drawable/logo" />
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="3"
+            android:weightSum="4"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/tv_name"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
                 android:text="Titulo Receta"
-                android:layout_weight="1"
                 android:lines="3"
                 android:minLines="1"
                 android:gravity="center"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:orientation="horizontal"
-                android:layout_weight="1">
+                android:weightSum="4">
+
                 <TextView
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Grupo:"
-                    android:layout_weight="3"
-                    android:gravity="center"/>
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="Grupo:" />
+
                 <TextView
                     android:id="@+id/tv_grupo"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="GRUPO AL QUE PERTENECE"
                     android:lines="3"
                     android:minLines="1"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical"/>
+                    android:layout_weight="3"
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="6">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -89,14 +101,16 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="INGREDIENTES"
-                android:layout_margin="@dimen/activity_vertical_margin"/>
-            <TableLayout
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:text="INGREDIENTES" />
+
+            <LinearLayout
                 android:id="@+id/tbl_ingredientes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </TableLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/table_margin"
+                android:layout_marginRight="@dimen/table_margin"
+                android:orientation="vertical" />
             <TextView
                 android:id="@+id/tv_no_ingrendientes"
                 android:layout_width="match_parent"
@@ -108,18 +122,21 @@
                 android:layout_height="1dp"
                 android:background="@android:color/black"
                 android:layout_marginTop="@dimen/activity_vertical_margin"/>
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PASOS"
-                android:layout_margin="@dimen/activity_vertical_margin"/>
-            <TableLayout
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:text="PASOS" />
+
+            <LinearLayout
                 android:id="@+id/tbl_pasos"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/table_margin"
+                android:layout_marginRight="@dimen/table_margin"
+                android:orientation="vertical" />
 
-            </TableLayout>
+
             <TextView
                 android:id="@+id/tv_no_pasos"
                 android:layout_width="match_parent"
@@ -138,15 +155,16 @@
                 android:id="@+id/tv_variante_general"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="VARIANTES"
-                android:layout_margin="@dimen/activity_vertical_margin"/>
-            <TableLayout
+                android:layout_margin="@dimen/activity_vertical_margin"
+                android:text="VARIANTES" />
+
+            <LinearLayout
                 android:id="@+id/tbl_variantes"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </TableLayout>
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/table_margin"
+                android:layout_marginRight="@dimen/table_margin"
+                android:orientation="vertical" />
         </LinearLayout>
     </ScrollView>
-
 </LinearLayout>

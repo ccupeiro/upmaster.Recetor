@@ -39,7 +39,7 @@ public class Preferencias_Activity extends AppCompatActivity {
         }
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
-        tv_titulo.setText("DIETA");
+        tv_titulo.setText("PREFERENCIAS");
         // Icono atrás
         ImageView iv_atras = (ImageView) findViewById(R.id.iv_atras);
         iv_atras.setVisibility(View.VISIBLE);

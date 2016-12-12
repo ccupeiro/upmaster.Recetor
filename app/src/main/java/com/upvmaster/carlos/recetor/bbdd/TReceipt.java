@@ -38,8 +38,8 @@ public class TReceipt {
     public static final String SELECT_GROUP_LIST = "SELECT * FROM "+TABLE_NAME+" ORDER BY "+GROUP;
 
     public static final String SELECT_RANDOM_RECEIPT = "SELECT * FROM " +TABLE_NAME
-            +"ORDER BY RAND()"
-            +"LIMIT 1";
+            +" ORDER BY RANDOM()"
+            +" LIMIT 1";
 
     public static final String UPDATE_FOTO ="UPDATE "+TABLE_NAME
             +" SET "+ IMAGE + "= ? "

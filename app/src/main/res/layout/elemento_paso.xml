@@ -2,18 +2,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal">
+    android:orientation="horizontal"
+    android:weightSum="15">
     <TextView
         android:id="@+id/tv_num_paso"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="2"
         android:text="Num"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:gravity="center"/>
     <TextView
         android:id="@+id/tv_texto_paso"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="13"
         android:text="Paso"
         android:lines="10"
         android:minLines="1"

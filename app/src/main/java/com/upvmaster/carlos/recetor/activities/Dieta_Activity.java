@@ -136,7 +136,7 @@ public class Dieta_Activity extends AppCompatActivity {
                     BufferedReader reader = new BufferedReader(new
                             InputStreamReader(conexion.getInputStream()));
                     String linea = reader.readLine();
-                    while (!linea.equals("")) {
+                    while (linea!=null && !linea.equals("")) {
                         json.append(linea);
                         linea = reader.readLine();
                     }
@@ -150,8 +150,8 @@ public class Dieta_Activity extends AppCompatActivity {
                 Log.e("DIETA", e.getMessage(), e);
             } finally {
                 if (conexion!=null) conexion.disconnect();
-                return false;
             }
+            return false;
         }
 
         @Override

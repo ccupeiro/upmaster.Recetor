@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -71,59 +73,48 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         TextView tv_group = (TextView) findViewById(R.id.tv_grupo);
         tv_group.setText(UtilsReceipt.getGroupName(receta.getGroup(),activity));
         //Ingredientes
-        TableLayout tl_ingredientes = (TableLayout) findViewById(R.id.tbl_ingredientes);
+        LinearLayout tl_ingredientes = (LinearLayout) findViewById(R.id.tbl_ingredientes);
         List<Ingrediente> ingredientes = receta.getList_ingredients();
         if(ingredientes!=null && ingredientes.size()>0){
             //Hay ingredientes
             TextView tv_no_ingredientes = (TextView) findViewById(R.id.tv_no_ingrendientes);
             tv_no_ingredientes.setVisibility(View.GONE);
             for(Ingrediente ing : ingredientes){
-                TableRow ingredienteRow = new TableRow(this);
-                ingredienteRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                View ingredienteRowInterno = getLayoutInflater().inflate(R.layout.elemento_ingrediente, null,false);
+                LinearLayout ll_ingrediente = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_ingrediente, null,false);
+                ll_ingrediente.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                String texto="";
                 if(ing.getCantidad()!=null && !ing.getCantidad().trim().equals("")){
-                    ((TextView)ingredienteRowInterno.findViewById(R.id.tv_cantidad)).setText(ing.getCantidad());
+                    texto+=ing.getCantidad()+" ";
                 }
-                else{
-                    ((TextView)ingredienteRowInterno.findViewById(R.id.tv_cantidad)).setVisibility(View.GONE);
-                }
-                ((TextView)ingredienteRowInterno.findViewById(R.id.tv_name_ingrediente)).setText(ing.getName());
-                //insertarlo en la tabla
-                ingredienteRow.addView(ingredienteRowInterno);
-                tl_ingredientes.addView(ingredienteRow);
+                ((TextView)ll_ingrediente.findViewById(R.id.tv_name_ingrediente)).setText(texto+ing.getName());
+                tl_ingredientes.addView(ll_ingrediente);
             }
         }
         //Pasos
-        TableLayout tl_pasos = (TableLayout) findViewById(R.id.tbl_pasos);
+        LinearLayout tl_pasos = (LinearLayout) findViewById(R.id.tbl_pasos);
         List<Step> pasos = receta.getList_steps();
         if(pasos!=null && ingredientes.size()>0){
             //Hay pasos
             TextView tv_no_pasos = (TextView) findViewById(R.id.tv_no_pasos);
             tv_no_pasos.setVisibility(View.GONE);
             for(Step paso : pasos){
-                TableRow pasoRow = new TableRow(this);
-                pasoRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                View pasoRowInterno = getLayoutInflater().inflate(R.layout.elemento_paso, null,false);
-                ((TextView)pasoRowInterno.findViewById(R.id.tv_num_paso)).setText(UtilsReceipt.getPaso(paso.getPos_paso()));
-                ((TextView)pasoRowInterno.findViewById(R.id.tv_texto_paso)).setText(paso.getDescription());
-                //insertarlo en la tabla
-                pasoRow.addView(pasoRowInterno);
-                tl_pasos.addView(pasoRow);
+                LinearLayout ll_paso = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_paso, null,false);
+                ll_paso.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                ((TextView)ll_paso.findViewById(R.id.tv_num_paso)).setText(UtilsReceipt.getPaso(paso.getPos_paso()));
+                ((TextView)ll_paso.findViewById(R.id.tv_texto_paso)).setText(paso.getDescription());
+                tl_pasos.addView(ll_paso);
             }
         }
         //Variantes
-        TableLayout tl_variantes = (TableLayout) findViewById(R.id.tbl_variantes);
+        LinearLayout tl_variantes = (LinearLayout) findViewById(R.id.tbl_variantes);
         List<Variante> variantes = receta.getList_variantes();
         if(variantes!=null && variantes.size()>0){
             //Hay Variantes
             for(Variante variante : variantes){
-                TableRow pasoRow = new TableRow(this);
-                pasoRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-                View pasoRowInterno = getLayoutInflater().inflate(R.layout.elemento_variante, null,false);
-                ((TextView)pasoRowInterno.findViewById(R.id.tv_variante)).setText(variante.getDescription());
-                //insertarlo en la tabla
-                pasoRow.addView(pasoRowInterno);
-                tl_pasos.addView(pasoRow);
+                LinearLayout ll_var = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_variante, null,false);
+                ll_var.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                ((TextView)ll_var.findViewById(R.id.tv_variante)).setText(variante.getDescription());
+                tl_variantes.addView(ll_var);
             }
         }else{
             tl_variantes.setVisibility(View.GONE);

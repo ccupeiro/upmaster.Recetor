@@ -3,8 +3,11 @@ package com.upvmaster.carlos.recetor.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -27,21 +30,29 @@ import com.upvmaster.carlos.recetor.entities.Receipt;
 public class Main_Activity extends AppCompatActivity {
 
     private Button btn_recetas,btn_random,btn_dietas;
-    private boolean animado=false;
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         new InitDBTask().execute();
         inicializarToolbar();
+        //Sonidos
+        final MediaPlayer mp = MediaPlayer.create(activity, R.raw.sonido_button);
         ImageView img_logo = (ImageView) findViewById(R.id.img_logo);
         btn_recetas = (Button) findViewById(R.id.btn_recetas);
         btn_recetas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp.start();
+                }
                 lanzar_Recetas(null);
             }
         });
@@ -49,6 +60,9 @@ public class Main_Activity extends AppCompatActivity {
         btn_random.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp.start();
+                }
                 lanzar_Random(view);
             }
         });
@@ -56,6 +70,9 @@ public class Main_Activity extends AppCompatActivity {
         btn_dietas.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp.start();
+                }
                 lanzar_Dieta(view);
             }
         });
@@ -69,12 +86,32 @@ public class Main_Activity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setPrefs();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
+    }
+
     private void inicializarToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         tv_titulo.setText(getString(R.string.app_name_mayus));
@@ -93,6 +130,9 @@ public class Main_Activity extends AppCompatActivity {
         iv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_add(view);
             }
         });
@@ -102,6 +142,9 @@ public class Main_Activity extends AppCompatActivity {
         iv_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_find(view);
             }
         });
@@ -111,6 +154,9 @@ public class Main_Activity extends AppCompatActivity {
         iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_config(view);
             }
         });
@@ -132,6 +178,7 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void lanzar_Recetas(View vista){
+
         Intent i = new Intent(this, ListReceipt_Activity.class);
         startActivity(i);
     }

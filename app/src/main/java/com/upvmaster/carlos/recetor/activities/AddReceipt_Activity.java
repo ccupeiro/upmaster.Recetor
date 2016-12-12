@@ -73,9 +73,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
     private String filename_temp ="temp.jpg";
     private List<Group> list_group;
 
-    private TableLayout tl_ingredientes;
-    private TableLayout tl_pasos;
-    private TableLayout tl_variante;
+    private LinearLayout tl_ingredientes;
+    private LinearLayout tl_pasos;
+    private LinearLayout tl_variante;
     private EditText et_titulo;
     private ImageView iv_imagen;
     private Spinner sp_group;
@@ -131,9 +131,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
             }
         });
         //Tablas
-        tl_ingredientes = (TableLayout) findViewById(R.id.tbl_ingredientes);
-        tl_pasos = (TableLayout) findViewById(R.id.tbl_pasos);
-        tl_variante = (TableLayout) findViewById(R.id.tbl_variantes);
+        tl_ingredientes = (LinearLayout) findViewById(R.id.tbl_ingredientes);
+        tl_pasos = (LinearLayout) findViewById(R.id.tbl_pasos);
+        tl_variante = (LinearLayout) findViewById(R.id.tbl_variantes);
         LinearLayout ll_add_ing = (LinearLayout) findViewById(R.id.ll_add_ingrediente);
         ll_add_ing.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -141,7 +141,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 addIngrediente(null,null);
             }
         });
-        /*LinearLayout ll_add_step = (LinearLayout) findViewById(R.id.ll_add_paso);
+        LinearLayout ll_add_step = (LinearLayout) findViewById(R.id.ll_add_paso);
         ll_add_step.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -155,7 +155,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 addVariante(null,null);
             }
-        });*/
+        });
         if(receta_edit!=null){
             inicializarEdit();
         }
@@ -403,18 +403,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
     }
 
     private void addIngrediente(View vista,Ingrediente ing){
-        LinearLayout ll_ingrediente = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_add_ingrediente, null,false);
+        final LinearLayout ll_ingrediente = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_add_ingrediente, null,false);
         ll_ingrediente.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        tl_ingredientes.addView(ll_ingrediente);
-
-
-
-
-
-        /*TableRow ingredienteRow = new TableRow(this);
-        ingredienteRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        View ingredienteRowInterno = getLayoutInflater().inflate(R.layout.elemento_add_ingrediente, null,false);
-        EditText et_ingrediente = (EditText) ingredienteRowInterno.findViewById(R.id.et_name_ingrediente);
+        EditText et_ingrediente = (EditText) ll_ingrediente.findViewById(R.id.et_name_ingrediente);
         et_ingrediente.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -427,20 +418,25 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 return false;
             }
         });
+        ImageView delete = (ImageView) ll_ingrediente.findViewById(R.id.iv_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tl_ingredientes.removeView(ll_ingrediente);
+            }
+        });
         if(ing!=null){
             et_ingrediente.setText(ing.getName());
-            ((EditText) ingredienteRowInterno.findViewById(R.id.et_cantidad)).setText(ing.getCantidad());
+            ((EditText) ll_ingrediente.findViewById(R.id.et_cantidad)).setText(ing.getCantidad());
+            et_ingrediente.setTag(ing.getId());
         }
-        //insertarlo en la tabla
-        ingredienteRow.addView(ingredienteRowInterno);
-        tl_ingredientes.addView(ingredienteRow);*/
+        tl_ingredientes.addView(ll_ingrediente);
     }
     private void addPaso(View vista,Step paso,int num_paso){
-        TableRow pasoRow = new TableRow(this);
-        pasoRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        View pasoRowInterno = getLayoutInflater().inflate(R.layout.elemento_add_paso, null,false);
-        ((TextView)pasoRowInterno.findViewById(R.id.tv_num_paso)).setText(UtilsReceipt.getPaso(num_paso));
-        EditText et_paso = (EditText) pasoRowInterno.findViewById(R.id.et_name_paso);
+        final LinearLayout ll_paso = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_add_paso, null,false);
+        ll_paso.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        ((TextView)ll_paso.findViewById(R.id.tv_num_paso)).setText(UtilsReceipt.getPaso(num_paso));
+        EditText et_paso = (EditText) ll_paso.findViewById(R.id.et_name_paso);
         et_paso.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -453,18 +449,23 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 return false;
             }
         });
+        ImageView delete = (ImageView) ll_paso.findViewById(R.id.iv_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tl_variante.removeView(ll_paso);
+            }
+        });
         if(paso!=null){
             et_paso.setText(paso.getDescription());
+            et_paso.setTag(paso.getId());
         }
-        //insertarlo en la tabla
-        pasoRow.addView(pasoRowInterno);
-        tl_pasos.addView(pasoRow);
+        tl_pasos.addView(ll_paso);
     }
     private void addVariante(View vista,Variante variante){
-        TableRow varianteRow = new TableRow(this);
-        varianteRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        View varianteRowInterno = getLayoutInflater().inflate(R.layout.elemento_add_variante, null,false);
-        EditText et_var = (EditText) varianteRowInterno.findViewById(R.id.et_name_variante);
+        final LinearLayout ll_var = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_add_variante, null,false);
+        ll_var.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        EditText et_var = (EditText) ll_var.findViewById(R.id.et_name_variante);
         et_var.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
@@ -477,11 +478,18 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 return false;
             }
         });
-        if(variante!=null)
+        ImageView delete = (ImageView) ll_var.findViewById(R.id.iv_delete);
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tl_variante.removeView(ll_var);
+            }
+        });
+        if(variante!=null){
             et_var.setText(variante.getDescription());
-        //insertarlo en la tabla
-        varianteRow.addView(varianteRowInterno);
-        tl_variante.addView(varianteRow);
+            et_var.setTag(variante.getId());
+        }
+        tl_variante.addView(ll_var);
     }
 
     private void dialogExitWithoutSave(){
@@ -530,14 +538,16 @@ public class AddReceipt_Activity extends AppCompatActivity {
         List<Ingrediente> lst_ingrediente = new ArrayList<>();
         for(int i = 0, j = tl_ingredientes.getChildCount(); i < j; i++) {
             View view = tl_ingredientes.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow row = (TableRow) view;
-                View vista = row.getChildAt(0);
-                EditText name = (EditText) vista.findViewById(R.id.et_name_ingrediente);
-                EditText cant = (EditText) vista.findViewById(R.id.et_cantidad);
+            if (view instanceof LinearLayout) {
+                LinearLayout row = (LinearLayout)view;
+                EditText name = (EditText) row.findViewById(R.id.et_name_ingrediente);
+                EditText cant = (EditText) row.findViewById(R.id.et_cantidad);
                 if(name.getText()== null || name.getText().toString().trim().equals(""))
                     continue;
                 Ingrediente ing = new Ingrediente(name.getText().toString(), cant.getText().toString());
+                if(name.getTag()!=null && !name.getTag().toString().trim().equals("-1")){
+                    ing.setId(Integer.parseInt((name.getTag().toString())));
+                }
                 lst_ingrediente.add(ing);
             }
         }
@@ -546,15 +556,17 @@ public class AddReceipt_Activity extends AppCompatActivity {
         List<Step> lst_pasos = new ArrayList<>();
         for(int i = 0, j = tl_pasos.getChildCount(); i < j; i++) {
             View view = tl_pasos.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow row = (TableRow) view;
-                View vista = row.getChildAt(0);
-                EditText paso_desc = (EditText) vista.findViewById(R.id.et_name_paso);
-                TextView paso_num = (TextView) vista.findViewById(R.id.tv_num_paso);
+            if (view instanceof LinearLayout) {
+                LinearLayout row = (LinearLayout)view;
+                EditText paso_desc = (EditText) row.findViewById(R.id.et_name_paso);
+                TextView paso_num = (TextView) row.findViewById(R.id.tv_num_paso);
                 if(paso_desc.getText()== null || paso_desc.getText().toString().trim().equals(""))
                     continue;
                 Step paso = new Step(UtilsReceipt.getintFromPaso(paso_num.getText().toString()),
                         paso_desc.getText().toString());
+                if(paso_desc.getTag()!=null && !paso_desc.getTag().toString().trim().equals("-1")){
+                    paso.setId(Integer.parseInt(paso_desc.getTag().toString()));
+                }
                 lst_pasos.add(paso);
             }
         }
@@ -563,12 +575,14 @@ public class AddReceipt_Activity extends AppCompatActivity {
         List<Variante> lst_variante = new ArrayList<>();
         for(int i = 0, j = tl_variante.getChildCount(); i < j; i++) {
             View view = tl_variante.getChildAt(i);
-            if (view instanceof TableRow) {
-                TableRow row = (TableRow) view;
-                View vista = row.getChildAt(0);
-                EditText var = (EditText) vista.findViewById(R.id.et_name_variante);
+            if (view instanceof LinearLayout) {
+                LinearLayout row = (LinearLayout)view;
+                EditText var = (EditText) row.findViewById(R.id.et_name_variante);
                 if(var.getText()== null || var.getText().toString().trim().equals(""))
                     continue;
+                if(var.getTag()!=null && !var.getTag().toString().trim().equals("-1")){
+                    var.setId(Integer.parseInt(var.getTag().toString()));
+                }
                 lst_variante.add(new Variante(var.getText().toString()));
             }
         }

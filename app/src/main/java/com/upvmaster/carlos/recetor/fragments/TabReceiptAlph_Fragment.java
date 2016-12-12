@@ -11,11 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.google.gson.Gson;
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration;
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.activities.ListReceipt_Activity;
 import com.upvmaster.carlos.recetor.activities.ViewReceipt_Activity;
 import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.entities.Receipt;
+import com.upvmaster.carlos.recetor.view.RecyclerViewDividerItemDecoration;
 
 /**
  * Created by Carlos on 03/12/2016.
@@ -48,6 +50,9 @@ public class TabReceiptAlph_Fragment extends Fragment {
         recyclerView.setAdapter(adaptador);
         layoutManager = new LinearLayoutManager(vistaTab.getContext());
         recyclerView.setLayoutManager(layoutManager);
+        StickyRecyclerHeadersDecoration headersDecor = new StickyRecyclerHeadersDecoration(adaptador);
+        recyclerView.addItemDecoration(headersDecor);
+        recyclerView.addItemDecoration(new RecyclerViewDividerItemDecoration(getActivity()));
         return vistaTab;
     }
 
