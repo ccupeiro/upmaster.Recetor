@@ -17,12 +17,15 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.adapters.ViewTabDietaAdapter;
+import com.upvmaster.carlos.recetor.entities.DiaDieta;
 import com.upvmaster.carlos.recetor.entities.Dieta;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Dieta_Activity extends AppCompatActivity {
     private static final String RUTA_SERVER="http://upvccupeiro.esy.es/recetor";

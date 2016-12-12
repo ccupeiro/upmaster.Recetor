@@ -65,6 +65,12 @@ public class Main_Activity extends AppCompatActivity {
             }
         });
         btn_dietas = (Button) findViewById(R.id.btn_dieta);
+        btn_dietas.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                lanzar_Dieta(view);
+            }
+        });
         LinearLayout grupo_btn = (LinearLayout) findViewById(R.id.grupo_botones);
         Animation anim_logo = AnimationUtils.loadAnimation(this,R.anim.anim_logo);
         Animation anim_botones = AnimationUtils.loadAnimation(this,R.anim.anim_botones);
@@ -143,6 +149,11 @@ public class Main_Activity extends AppCompatActivity {
     }
     private void lanzar_Random(View vista){
         new RandomReciptTask().execute();
+    }
+
+    private void lanzar_Dieta(View vista){
+        Intent i = new Intent(this, Dieta_Activity.class);
+        startActivity(i);
     }
 
     private class InitDBTask extends  AsyncTask<Void,Void,Void>{
