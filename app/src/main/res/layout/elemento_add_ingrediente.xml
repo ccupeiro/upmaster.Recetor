@@ -2,22 +2,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:weightSum="10">
+    android:orientation="horizontal">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:layout_weight="1"
         android:src="@mipmap/ic_chevron_right_black_18dp" />
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_cantidad"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_weight="2">
+        android:layout_marginBottom="10dp">
 
         <EditText
             android:id="@+id/et_cantidad"
@@ -25,7 +22,8 @@
             android:layout_height="match_parent"
             android:hint="Cant"
             android:imeOptions="actionNext"
-            android:inputType="textMultiLine"
+            android:ems="8"
+            android:maxEms="10"
             android:minLines="1"
             android:lines="2"
             android:nextFocusDown="@+id/et_name_ingrediente" />
@@ -33,10 +31,9 @@
     </android.support.design.widget.TextInputLayout>
     <android.support.design.widget.TextInputLayout
         android:id="@+id/til_name_ingrediente"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight="7"
         android:layout_marginBottom="10dp">
 
         <EditText
@@ -45,9 +42,19 @@
             android:layout_height="match_parent"
             android:hint="Ingrediente"
             android:imeOptions="actionDone"
-            android:inputType="textMultiLine"
+            android:ems="8"
+            android:maxEms="10"
             android:minLines="1"
             android:lines="2" />
 
     </android.support.design.widget.TextInputLayout>
+    <ImageView
+        android:id="@+id/iv_delete"
+        style="@style/ItemToolbar"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:contentDescription="@null"
+        android:src="@mipmap/ic_delete_black_24dp"
+        android:layout_centerInParent="true"
+        android:layout_alignParentStart="true"/>
 </LinearLayout>
