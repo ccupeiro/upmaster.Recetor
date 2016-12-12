@@ -17,13 +17,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
-import com.upvmaster.carlos.recetor.adapters.AlphabeticAdapter;
 import com.upvmaster.carlos.recetor.adapters.SearchAdapter;
 import com.upvmaster.carlos.recetor.bbdd.DBHelper;
 import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
@@ -85,10 +82,10 @@ public class Search_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 int pos = recyclerView.getChildAdapterPosition(view);
-                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
                 Receipt r = search_list.get(pos);
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
+                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(r));
                 startActivity(i);
             }
         });

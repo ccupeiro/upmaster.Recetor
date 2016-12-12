@@ -21,9 +21,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"
-        android:lines="2"
+        android:lines="4"
         android:minLines="1"
-        android:text="Ingrediente"
+        android:text="Ingredienteeeeeeeeeeeeeeeeeeeeeeeeeeeeee e e e e e ee e e e e e e eeeeeeeeeeeeeeeeeeeeeeeasdñlfksdklfjañklsjdfñakjsdfñakjsdf"
         android:gravity="left|center"/>
 
 </LinearLayout>

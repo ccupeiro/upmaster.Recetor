@@ -25,7 +25,7 @@ import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 import java.io.File;
 import java.util.List;
 
-public class ViewReceipt_Activity extends AppCompatActivity {
+public class View2Receipt_Activity extends AppCompatActivity {
     public static final String ID_RECETA = "receta";
     private Receipt receta;
     private Activity activity;

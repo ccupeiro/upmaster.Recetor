@@ -1,9 +1,7 @@
 package com.upvmaster.carlos.recetor.activities;
 
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -11,12 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,15 +21,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.bbdd.DBHelper;
-import com.upvmaster.carlos.recetor.bbdd.dao.GroupDao;
 import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
-import com.upvmaster.carlos.recetor.entities.Group;
-import com.upvmaster.carlos.recetor.entities.Ingrediente;
 import com.upvmaster.carlos.recetor.entities.Receipt;
-import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main_Activity extends AppCompatActivity {
 
@@ -197,9 +185,9 @@ public class Main_Activity extends AppCompatActivity {
             if(pd!=null)
                 pd.dismiss();
             if(randomReceipt!=null && resul){
-                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
+                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
                 startActivity(i);
             }else{
                 Toast.makeText(getApplicationContext()

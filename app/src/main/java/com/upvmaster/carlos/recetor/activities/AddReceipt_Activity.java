@@ -4,10 +4,8 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
@@ -15,7 +13,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -28,6 +25,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
@@ -143,7 +141,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 addIngrediente(null,null);
             }
         });
-        LinearLayout ll_add_step = (LinearLayout) findViewById(R.id.ll_add_paso);
+        /*LinearLayout ll_add_step = (LinearLayout) findViewById(R.id.ll_add_paso);
         ll_add_step.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,7 +155,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
             public void onClick(View view) {
                 addVariante(null,null);
             }
-        });
+        });*/
         if(receta_edit!=null){
             inicializarEdit();
         }
@@ -405,7 +403,15 @@ public class AddReceipt_Activity extends AppCompatActivity {
     }
 
     private void addIngrediente(View vista,Ingrediente ing){
-        TableRow ingredienteRow = new TableRow(this);
+        LinearLayout ll_ingrediente = (LinearLayout) getLayoutInflater().inflate(R.layout.elemento_add_ingrediente, null,false);
+        ll_ingrediente.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        tl_ingredientes.addView(ll_ingrediente);
+
+
+
+
+
+        /*TableRow ingredienteRow = new TableRow(this);
         ingredienteRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
         View ingredienteRowInterno = getLayoutInflater().inflate(R.layout.elemento_add_ingrediente, null,false);
         EditText et_ingrediente = (EditText) ingredienteRowInterno.findViewById(R.id.et_name_ingrediente);
@@ -427,7 +433,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         }
         //insertarlo en la tabla
         ingredienteRow.addView(ingredienteRowInterno);
-        tl_ingredientes.addView(ingredienteRow);
+        tl_ingredientes.addView(ingredienteRow);*/
     }
     private void addPaso(View vista,Step paso,int num_paso){
         TableRow pasoRow = new TableRow(this);
@@ -628,9 +634,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
                         ,"Se ha guardado la receta"
                         ,Toast.LENGTH_LONG).show();
 
-                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                View2Receipt_Activity vista_activity = new View2Receipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta));
+                i.putExtra(View2Receipt_Activity.ID_RECETA, new Gson().toJson(receta));
                 startActivity(i);
                 activity.finish();
             }else{
