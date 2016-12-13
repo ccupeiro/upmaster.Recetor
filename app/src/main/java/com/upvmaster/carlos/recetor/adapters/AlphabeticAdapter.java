@@ -63,7 +63,7 @@ public class AlphabeticAdapter extends RecyclerView.Adapter<ReceiptHolder> imple
     @Override
     public long getHeaderId(int position) {
         Receipt receta = lista_recetas.get(position);
-        return (int) receta.getName().toUpperCase().charAt(0);
+        return (int) receta.getName().trim().toUpperCase().charAt(0);
     }
 
     @Override

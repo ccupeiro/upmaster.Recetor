@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5e7974</color>
-    <color name="colorPrimaryDark">#2D4B45</color>
-    <color name="colorAccent">#B48C92</color>
-    <color name="gradient_pressed_ini">#345953</color>
-    <color name="gradient_pressed_fin">#689a92</color>
-    <color name="gradient_shape_ini">#8dbab3</color>
-    <color name="gradient_shape_fin">#58857e</color>
+    <color name="colorPrimary">#fa7676</color>
+    <color name="colorPrimaryDark">#700600</color>
+    <color name="colorAccent">#337D84</color>
+    <color name="gradient_pressed_ini">#9A1B14</color>
+    <color name="gradient_pressed_fin">#D85851</color>
+    <color name="gradient_shape_ini">#FE8F89</color>
+    <color name="gradient_shape_fin">#9A1B14</color>
     <color name="button_text_color">#ffffff</color>
     <color name="greyDark">#424242</color>
-    <color name="cabecera">#bebbbb</color>
+    <color name="cabecera">#337D84</color>
     <color name="borrado">#FF0000</color>
-
-    <!--PALETA POSIBLE!! -->
-    <color name="posibles">#493F23</color>
-    <color name="colorAccent_bis">#F52509</color>
-    <color name="colorPrimaryDark_bis">#E29C46</color>
-    <color name="colorPrimary_bis">#EAD39D</color>
-    <color name="posibles5">#6C8F7D</color>
+    <color name="fondo_camara">#F2D59A</color>
 
 </resources>

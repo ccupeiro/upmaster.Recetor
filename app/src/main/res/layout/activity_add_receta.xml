@@ -65,7 +65,7 @@
                 android:layout_gravity="top|end"
                 android:paddingEnd="0dp"
                 android:paddingTop="0dp"
-                android:src="@mipmap/ic_pencil_white_24dp"
+                android:src="@mipmap/ic_camera_enhance_white_24dp"
                 android:tint="@android:color/black" />
         </android.support.design.widget.CoordinatorLayout>
 
@@ -89,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:hint="Nombre Receta"
+                    android:hint="@string/nombre_receta"
                     android:imeOptions="actionDone"
                     android:inputType="textMultiLine"
                     android:lines="3" />
@@ -108,7 +108,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Grupo:" />
+                    android:text="@string/tv_group" />
 
                 <Spinner
                     android:id="@+id/spinner_group"
@@ -133,7 +133,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="INGREDIENTES" />
+                android:text="@string/title_ingredientes" />
 
             <LinearLayout
                 android:id="@+id/tbl_ingredientes"
@@ -160,7 +160,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Añadir Ingrediente.." />
+                    android:text="@string/add_ingrendient" />
             </LinearLayout>
 
             <View
@@ -173,7 +173,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="PASOS" />
+                android:text="@string/title_pasos" />
 
             <LinearLayout
                 android:id="@+id/tbl_pasos"
@@ -200,7 +200,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Añadir Paso.." />
+                    android:text="@string/add_paso" />
             </LinearLayout>
 
             <View
@@ -213,7 +213,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="VARIANTES" />
+                android:text="@string/title_variantes" />
 
             <LinearLayout
                 android:id="@+id/tbl_variantes"
@@ -240,7 +240,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Añadir Variante..." />
+                    android:text="@string/add_variante" />
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

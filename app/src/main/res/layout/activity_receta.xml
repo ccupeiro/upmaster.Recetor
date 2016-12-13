@@ -59,7 +59,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="2"
-                android:text="Titulo Receta"
+                android:text="@string/nombre_receta"
                 android:lines="3"
                 android:minLines="1"
                 android:gravity="center"/>
@@ -77,7 +77,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Grupo:" />
+                    android:text="@string/tv_group" />
 
                 <TextView
                     android:id="@+id/tv_grupo"
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="INGREDIENTES" />
+                android:text="@string/title_ingredientes" />
 
             <LinearLayout
                 android:id="@+id/tbl_ingredientes"
@@ -117,7 +117,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="NO HAY INGREDIENTES"/>
+                android:text="@string/no_hay_ingredientes"/>
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="PASOS" />
+                android:text="@string/title_pasos" />
 
             <LinearLayout
                 android:id="@+id/tbl_pasos"
@@ -143,7 +143,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="NO HAY PASOS"/>
+                android:text="@string/no_hay_pasos"/>
 
             <View
                 android:id="@+id/linea_pasos"
@@ -157,7 +157,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/activity_vertical_margin"
-                android:text="VARIANTES" />
+                android:text="@string/title_variantes" />
 
             <LinearLayout
                 android:id="@+id/tbl_variantes"

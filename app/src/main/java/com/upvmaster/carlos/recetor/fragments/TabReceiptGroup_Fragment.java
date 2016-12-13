@@ -67,10 +67,8 @@ public class TabReceiptGroup_Fragment extends Fragment{
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Receipt r = ((ListReceipt_Activity)getActivity()).getGroup_list().get(pos);
                 Intent i = new Intent(getContext(),vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_VIENE_LISTA,true);
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(r));
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, r);
                 startActivity(i);
-                parent.finish();
             }
         });
         recyclerView.setAdapter(adaptador);
@@ -101,7 +99,7 @@ public class TabReceiptGroup_Fragment extends Fragment{
                 new BorrarReceiptTask(item).execute();
             }
         };
-        Snackbar snackbar = Snackbar.make(vistaTab, "La receta ha sido eliminada", Snackbar.LENGTH_LONG);
+        Snackbar snackbar = Snackbar.make(vistaTab, R.string.receipt_erase_message, Snackbar.LENGTH_LONG);
         TextView snackbarText = (TextView) snackbar.getView().findViewById(android.support.design.R.id.snackbar_text);
         snackbarText.setTextColor(Color.WHITE);
         View.OnClickListener listener = new View.OnClickListener() {
@@ -110,7 +108,7 @@ public class TabReceiptGroup_Fragment extends Fragment{
                 undo.run();
             }
         };
-        snackbar.setAction("Deshacer", listener);
+        snackbar.setAction(R.string.undo, listener);
         snackbar.setActionTextColor(Color.GRAY);
         snackbar.setCallback(new Snackbar.Callback() {
             @Override
@@ -140,7 +138,7 @@ public class TabReceiptGroup_Fragment extends Fragment{
             public void onChildDraw(Canvas c, RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
                 Bitmap bitmap=null;
                 if (actionState == ItemTouchHelper.ACTION_STATE_SWIPE) {
-                    UtilsReceipt.pintarFondo(getActivity(), c, viewHolder, dX);
+                    UtilsReceipt.pintarFondoRight(getActivity(), c, viewHolder, dX);
                 }
                 super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
             }

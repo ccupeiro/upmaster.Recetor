@@ -67,7 +67,7 @@ public class UtilsReceipt {
         }
     }
 
-    public static void pintarFondo(Context context, Canvas c, RecyclerView.ViewHolder viewHolder, float dX) {
+    public static void pintarFondoRight(Context context, Canvas c, RecyclerView.ViewHolder viewHolder, float dX) {
         // Background
         RectF background = new RectF((float) viewHolder.itemView.getRight() + dX, (float) viewHolder.itemView.getTop(), (float) viewHolder.itemView.getRight(), (float) viewHolder.itemView.getBottom());
         Paint paint = new Paint();
@@ -78,6 +78,19 @@ public class UtilsReceipt {
         float width = height / 3;
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_delete_black_24dp);
         RectF dst = new RectF((float) viewHolder.itemView.getRight() - 2 * width, (float) viewHolder.itemView.getTop() + width, (float) viewHolder.itemView.getRight() - width, (float) viewHolder.itemView.getBottom() - width);
+        c.drawBitmap(bitmap, null, dst, paint);
+    }
+    public static void pintarFondoLeft(Context context, Canvas c, RecyclerView.ViewHolder viewHolder, float dX) {
+        // Background
+        RectF background = new RectF((float) viewHolder.itemView.getLeft(), (float) viewHolder.itemView.getTop(), (float) viewHolder.itemView.getLeft()+dX, (float) viewHolder.itemView.getBottom());
+        Paint paint = new Paint();
+        paint.setColor(ContextCompat.getColor(context, R.color.borrado));
+        c.drawRect(background, paint);
+        // Bitmap
+        float height = viewHolder.itemView.getBottom() - viewHolder.itemView.getTop();
+        float width = height / 3;
+        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_delete_black_24dp);
+        RectF dst = new RectF((float) viewHolder.itemView.getLeft() + width, (float) viewHolder.itemView.getTop() + width, (float) viewHolder.itemView.getLeft() + 2 * width, (float) viewHolder.itemView.getBottom() - width);
         c.drawBitmap(bitmap, null, dst, paint);
     }
 

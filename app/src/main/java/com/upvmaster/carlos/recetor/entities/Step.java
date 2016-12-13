@@ -1,10 +1,12 @@
 package com.upvmaster.carlos.recetor.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Carlos on 10/12/2016.
  */
 
-public class Step {
+public class Step implements Serializable{
     private int id;
     private int pos_paso;
     private String description;

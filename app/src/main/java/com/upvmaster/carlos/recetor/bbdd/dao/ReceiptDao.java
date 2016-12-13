@@ -17,6 +17,7 @@ import com.upvmaster.carlos.recetor.entities.Step;
 import com.upvmaster.carlos.recetor.entities.Variante;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -45,6 +46,7 @@ public class ReceiptDao {
                 stmt_receipt.bindString(3,receta.getSrc_photo());
             }
             id = stmt_receipt.executeInsert();
+            receta.setId((int)id);
             //Tabla Ingredients
             for(Ingrediente ing : receta.getList_ingredients()){
                 insert_Ingrediente(ing,receta.getId());
@@ -61,6 +63,7 @@ public class ReceiptDao {
             }
 
         } catch (SQLiteException e) {
+            delete((int)id);
             throw e;
         } finally {
             stmt_receipt.close();
@@ -118,7 +121,9 @@ public class ReceiptDao {
     }
 
     public List<Receipt> getAlphList() throws Exception{
-        return getAllReceipt(TReceipt.SELECT_ALPHABETIC_LIST);
+        List<Receipt> lista = getAllReceipt(TReceipt.SELECT_ALPHABETIC_LIST);
+        Collections.sort(lista);
+        return lista;
     }
 
     public List<Receipt> getAllReceipt(String query){
@@ -350,7 +355,7 @@ public class ReceiptDao {
     public void insert_Variant(Variante var, int Receipt_id){
         SQLiteStatement stmt_var=null;
         try{
-            stmt_var = db.compileStatement(TVariants.UPDATE);
+            stmt_var = db.compileStatement(TVariants.INSERT);
             stmt_var.bindLong(1, Receipt_id);
             stmt_var.bindString(2, var.getDescription());
             stmt_var.executeInsert();

@@ -1,6 +1,8 @@
 package com.upvmaster.carlos.recetor.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +11,8 @@ import android.widget.TextView;
 import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.entities.Receipt;
 import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
+
+import java.io.File;
 
 /**
  * Created by Carlos on 03/12/2016.
@@ -49,7 +53,18 @@ public class ReceiptHolder extends RecyclerView.ViewHolder {
         }else{
             titulo.setText(receta.getName());
             //TODO esto hay que cambiarlo para que cargue la imagen de la receta
-            icon.setImageResource(R.drawable.logo);
+            if(receta.getSrc_photo()!=null && !receta.getSrc_photo().equals("")){
+                //Hay foto
+                File imgFile = new File(receta.getSrc_photo());
+                if(imgFile.exists()){
+                    Bitmap bmp = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                    icon.setImageBitmap(bmp);
+                }else{
+                    icon.setImageResource(R.drawable.logo);
+                }
+            }else{
+                icon.setImageResource(R.drawable.logo);
+            }
         }
 
     }

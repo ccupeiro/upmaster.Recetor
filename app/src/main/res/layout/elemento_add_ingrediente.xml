@@ -24,7 +24,7 @@
             android:id="@+id/et_cantidad"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Cant"
+            android:hint="@string/hint_cant"
             android:imeOptions="actionNext"
             android:minLines="1"
             android:lines="2"
@@ -43,7 +43,7 @@
             android:id="@+id/et_name_ingrediente"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Ingrediente"
+            android:hint="@string/hint_ingrediente"
             android:imeOptions="actionDone"
             android:minLines="1"
             android:lines="2" />

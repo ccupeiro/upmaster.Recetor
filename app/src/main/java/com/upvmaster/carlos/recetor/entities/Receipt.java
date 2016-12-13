@@ -1,12 +1,13 @@
 package com.upvmaster.carlos.recetor.entities;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Carlos on 03/12/2016.
  */
 
-public class Receipt {
+public class Receipt implements Serializable, Comparable{
     private String name;
     private String src_photo;
     private int group;
@@ -86,5 +87,11 @@ public class Receipt {
                 ", list_steps=" + list_steps +
                 ", list_variantes=" + list_variantes +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        Receipt receta=(Receipt) o;
+        return this.getName().trim().compareToIgnoreCase(receta.getName().trim());
     }
 }

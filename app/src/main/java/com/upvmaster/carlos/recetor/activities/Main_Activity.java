@@ -41,7 +41,6 @@ public class Main_Activity extends AppCompatActivity {
         activity = this;
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         setPrefs();
-        new InitDBTask().execute();
         inicializarToolbar();
         //Sonidos
         final MediaPlayer mp = MediaPlayer.create(activity, R.raw.sonido_button);
@@ -79,8 +78,7 @@ public class Main_Activity extends AppCompatActivity {
         LinearLayout grupo_btn = (LinearLayout) findViewById(R.id.grupo_botones);
         Animation anim_logo = AnimationUtils.loadAnimation(this,R.anim.anim_logo);
         Animation anim_botones = AnimationUtils.loadAnimation(this,R.anim.anim_botones);
-        if(!animado){
-            animado = true;
+        if(animado){
             img_logo.startAnimation(anim_logo);
             grupo_btn.startAnimation(anim_botones);
         }
@@ -191,15 +189,6 @@ public class Main_Activity extends AppCompatActivity {
         startActivity(i);
     }
 
-    private class InitDBTask extends  AsyncTask<Void,Void,Void>{
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            SQLiteDatabase db = DBHelper.getDatabase(activity);
-            return null;
-        }
-    }
-
     private class RandomReciptTask extends AsyncTask<Void,Void,Boolean>{
 
         private ProgressDialog pd;
@@ -209,7 +198,7 @@ public class Main_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Cargando listas");
+            pd.setMessage(getString(R.string.main_loading_random));
             pd.show();
         }
 
@@ -234,11 +223,11 @@ public class Main_Activity extends AppCompatActivity {
             if(randomReceipt!=null && resul){
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(randomReceipt));
+                i.putExtra(ViewReceipt_Activity.ID_RECETA, randomReceipt);
                 startActivity(i);
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se ha cargado la receta Random! Error"
+                        , R.string.main_error_loading_random
                         ,Toast.LENGTH_LONG).show();
                 activity.finish();
             }

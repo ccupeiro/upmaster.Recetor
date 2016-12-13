@@ -19,7 +19,7 @@ public class TVariants {
     public static final String INSERT ="INSERT INTO "+TABLE_NAME
             +" ("+RECEIPT_ID+","
             +DESCRIPTION+")"
-            +" VALUES (?,?,?)";
+            +" VALUES (?,?)";
     public static final String UPDATE ="UPDATE "+TABLE_NAME
             +" SET "+RECEIPT_ID+"= ? ,"
             + DESCRIPTION + "= ? "

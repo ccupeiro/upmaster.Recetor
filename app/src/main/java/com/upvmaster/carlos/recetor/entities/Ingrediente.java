@@ -1,9 +1,11 @@
 package com.upvmaster.carlos.recetor.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Carlos on 03/12/2016.
  */
-public class Ingrediente {
+public class Ingrediente implements Serializable {
     private int id;
     private String name;
     private String cantidad;

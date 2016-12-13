@@ -29,6 +29,7 @@ import com.upvmaster.carlos.recetor.adapters.ViewTabAdapter;
 import com.upvmaster.carlos.recetor.bbdd.DBHelper;
 import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
 import com.upvmaster.carlos.recetor.entities.Receipt;
+import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
 import java.util.List;
 
@@ -40,6 +41,8 @@ public class ListReceipt_Activity extends AppCompatActivity {
     private Activity activity;
     private SharedPreferences pref;
     private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private ViewTabAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,17 +52,18 @@ public class ListReceipt_Activity extends AppCompatActivity {
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         setPrefs();
         inicializarToolbar();
+        inicialirTabs();
+    }
+
+    private void inicialirTabs(){
         tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Alph)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Group)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-    }
-
-    private void inicialirTabs(){
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.pagina);
-        final ViewTabAdapter adapter = new ViewTabAdapter
+        viewPager = (ViewPager) findViewById(R.id.pagina);
+        adapter = new ViewTabAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
-        viewPager.setAdapter(adapter);
+
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -96,7 +100,7 @@ public class ListReceipt_Activity extends AppCompatActivity {
         final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
-        tv_titulo.setText("Listados");
+        tv_titulo.setText(R.string.list_receipt_title);
         // Icono atrás
         ImageView iv_atras = (ImageView) findViewById(R.id.iv_atras);
         iv_atras.setVisibility(View.VISIBLE);
@@ -205,7 +209,7 @@ public class ListReceipt_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Cargando listas");
+            pd.setMessage(getString(R.string.list_receipt_loading_list));
             pd.show();
         }
 
@@ -230,10 +234,11 @@ public class ListReceipt_Activity extends AppCompatActivity {
             if(pd!=null)
                 pd.dismiss();
             if(alph_list!=null && group_list!=null && resul){
-                inicialirTabs();
+                viewPager.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se han cargado las listas! Error"
+                        , R.string.list_receipt_error_loading_list
                         ,Toast.LENGTH_LONG).show();
                 activity.finish();
             }

@@ -40,7 +40,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:src="@drawable/logo" />
+        android:src="@drawable/logo_main" />
     <LinearLayout
         android:id="@+id/grupo_botones"
         android:layout_width="match_parent"
@@ -56,19 +56,17 @@
                 android:id="@+id/btn_recetas"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="RECETAS"
+                android:text="@string/button_recetas"
                 android:textAppearance="@android:style/TextAppearance.Medium"
-                android:drawableTop="@mipmap/ic_receipt_black_36dp"
-                android:drawableTint="@android:color/white"
+                android:drawableTop="@mipmap/ic_receipt_white_36dp"
                 style="@style/ButtonStyle"/>
             <Button
                 android:id="@+id/btn_comida_random"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="¿QUE COMER?"
+                android:text="@string/button_random"
                 android:textAppearance="@android:style/TextAppearance.Medium"
-                android:drawableTop="@mipmap/ic_food_fork_drink_black_36dp"
-                android:drawableTint="@android:color/white"
+                android:drawableTop="@mipmap/ic_food_fork_drink_white_36dp"
                 style="@style/ButtonStyle"
                 />
         </LinearLayout>
@@ -82,9 +80,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textAppearance="@android:style/TextAppearance.Medium"
-                android:drawableTop="@mipmap/ic_heart_pulse_black_36dp"
-                android:drawableTint="@android:color/white"
-                android:text="DIETA"
+                android:drawableTop="@mipmap/ic_heart_pulse_white_36dp"
+                android:text="@string/button_dieta"
                 style="@style/ButtonStyle"/>
         </LinearLayout>
 

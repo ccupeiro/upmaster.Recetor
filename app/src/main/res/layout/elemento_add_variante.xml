@@ -24,7 +24,7 @@
             android:id="@+id/et_name_variante"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Variante de paso"
+            android:hint="@string/hint_variante_de_paso"
             android:scrollbars="vertical"
             android:minLines="1"
             android:lines="10"

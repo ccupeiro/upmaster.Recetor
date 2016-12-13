@@ -38,7 +38,7 @@ public class TabDieta_Fragment extends Fragment {
             ll_desayuno.addView(getFood(inflater,plato));
         }
         LinearLayout ll_mediamanana = (LinearLayout) vistaTab.findViewById(R.id.ll_mediamanana);
-        for(String plato: diaDieta.getComida()){
+        for(String plato: diaDieta.getMediamanana()){
             ll_mediamanana.addView(getFood(inflater,plato));
         }
         LinearLayout ll_comida = (LinearLayout) vistaTab.findViewById(R.id.ll_comida);

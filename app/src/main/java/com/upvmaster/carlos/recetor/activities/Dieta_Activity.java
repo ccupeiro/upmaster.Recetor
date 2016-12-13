@@ -87,7 +87,7 @@ public class Dieta_Activity extends AppCompatActivity {
         final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
-        tv_titulo.setText("DIETA");
+        tv_titulo.setText(R.string.diet_title);
         // Icono atrás
         ImageView iv_atras = (ImageView) findViewById(R.id.iv_atras);
         iv_atras.setVisibility(View.VISIBLE);
@@ -119,13 +119,13 @@ public class Dieta_Activity extends AppCompatActivity {
 
     private void inicialirTabs(){
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.addTab(tabLayout.newTab().setText("L"));
-        tabLayout.addTab(tabLayout.newTab().setText("M"));
-        tabLayout.addTab(tabLayout.newTab().setText("X"));
-        tabLayout.addTab(tabLayout.newTab().setText("J"));
-        tabLayout.addTab(tabLayout.newTab().setText("V"));
-        tabLayout.addTab(tabLayout.newTab().setText("S"));
-        tabLayout.addTab(tabLayout.newTab().setText("D"));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_monday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_tuesday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_wednesday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_thursday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_friday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_saturday_title));
+        tabLayout.addTab(tabLayout.newTab().setText(R.string.diet_sunday_title));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pagina);
         final ViewTabDietaAdapter adapter = new ViewTabDietaAdapter
@@ -152,7 +152,7 @@ public class Dieta_Activity extends AppCompatActivity {
 
     private void solicitarPermisoInternet() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
-            Snackbar.make (activity.getCurrentFocus(), "Permiso Internet", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+            Snackbar.make (activity.getCurrentFocus(), getString(R.string.permission_internet), Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.INTERNET}, SOLICITUD_PERMISO_INTERNET);
@@ -170,7 +170,7 @@ public class Dieta_Activity extends AppCompatActivity {
                 if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     new GetDietaTask().execute();
                 } else {
-                    Snackbar.make(this.getCurrentFocus(), "No se puede utilizar la dieta sin el permiso de internet", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(this.getCurrentFocus(), R.string.permission_message_internet, Snackbar.LENGTH_SHORT).show();
                     finish();
                 }
                 break;
@@ -189,7 +189,7 @@ public class Dieta_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Cargando Dieta");
+            pd.setMessage(getString(R.string.diet_loading_diet));
             pd.show();
         }
 
@@ -228,12 +228,11 @@ public class Dieta_Activity extends AppCompatActivity {
             if(pd!=null)
                 pd.dismiss();
             if(dieta!=null && resul){
-                //TODO validar dieta
                 dieta.ordenarDieta();
                 inicialirTabs();
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se han cargado la dieta! Error"
+                        , R.string.diet_error_loading_diet
                         ,Toast.LENGTH_LONG).show();
                 activity.finish();
             }

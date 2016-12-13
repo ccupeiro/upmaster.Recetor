@@ -24,7 +24,7 @@
             android:id="@+id/et_name_paso"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Paso"
+            android:hint="@string/hint_paso"
             android:minLines="1"
             android:lines="10"
             android:scrollbars="vertical"

@@ -95,14 +95,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         //Mirar que no envien nada
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         setPrefs();
-        String jsonReceta="";
-        Bundle extras = getIntent().getExtras();
-        if(extras!=null){
-            jsonReceta = extras.getString(ID_EDIT_RECETA);
-            if(jsonReceta!=null){
-                receta_edit = new Gson().fromJson(jsonReceta,Receipt.class);
-            }
-        }
+        receta_edit = (Receipt) getIntent().getSerializableExtra(ID_EDIT_RECETA);
         activity = this;
         //Borrar imagen temporal si existe
         File mypath=new File(activity.getFilesDir(),filename_temp);
@@ -207,9 +200,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         if(receta_edit!=null){
-            tv_titulo.setText("Editar Receta");
+            tv_titulo.setText(R.string.add_receipt_editar_title);
         }else{
-            tv_titulo.setText("Añadir Receta");
+            tv_titulo.setText(R.string.add_receipt_anadir_title);
         }
 
         // Icono atrás
@@ -315,7 +308,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
 
     private void solicitarPermisoCamara() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
-            Snackbar.make (activity.getCurrentFocus(), "Permiso Camara", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+            Snackbar.make (activity.getCurrentFocus(), getString(R.string.permission_camera), Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.CAMERA}, SOLICITUD_PERMISO_CAMARA);
@@ -327,7 +320,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
     }
     private void solicitarPermisoExternalStorage() {
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-            Snackbar.make (activity.getCurrentFocus(), "Permiso Lectura de Galeria", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+            Snackbar.make (activity.getCurrentFocus(), getString(R.string.permission_gallery), Snackbar.LENGTH_INDEFINITE).setAction(R.string.ok, new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SOLICITUD_READ_EXTERNAL_STORAGE);
@@ -345,14 +338,14 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     clickFoto(null);
                 } else {
-                    Snackbar.make(this.getCurrentFocus(), "No se puede utilizar la camara sin permiso", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(this.getCurrentFocus(), R.string.message_permission_denied_camera, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             case SOLICITUD_READ_EXTERNAL_STORAGE:
                 if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     clickFoto(null);
                 } else {
-                    Snackbar.make(this.getCurrentFocus(), "No se puede utilizar la camara sin permiso de CAMARA de acceso a la GALERIA", Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(this.getCurrentFocus(), R.string.message_permission_denied_gallery, Snackbar.LENGTH_SHORT).show();
                 }
                 break;
             default:
@@ -363,16 +356,16 @@ public class AddReceipt_Activity extends AppCompatActivity {
 
     private void createAlertCamera(final Runnable runCapture, final Runnable runGallery){
         AlertDialog.Builder mBuilderAlertDialog = new AlertDialog.Builder(activity, R.style.alert_dialog_gota);
-        mBuilderAlertDialog.setTitle("Foto");
-        mBuilderAlertDialog.setMessage("De donde quiere sacar la foto");
+        mBuilderAlertDialog.setTitle(R.string.add_receipt_alert_photo_title);
+        mBuilderAlertDialog.setMessage(R.string.add_receipt_alert_photo_message);
         mBuilderAlertDialog.setCancelable(true);
-        mBuilderAlertDialog.setPositiveButton("Cámara", new DialogInterface.OnClickListener() {
+        mBuilderAlertDialog.setPositiveButton(R.string.add_receipt_alert_photo_camara_text_ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 runCapture.run();
             }
         });
-        mBuilderAlertDialog.setNegativeButton("Galería", new DialogInterface.OnClickListener() {
+        mBuilderAlertDialog.setNegativeButton(R.string.add_receipt_alert_photo_gallery_button, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 runGallery.run();
@@ -399,7 +392,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 File f = new File(activity.getFilesDir(), filename_temp);
                 mostrarImagenTemp(f.getAbsolutePath());
             } catch (IOException e) {
-                Toast.makeText(activity,"No se ha podido cargar la imagen de galería",Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.add_receipt_message_gallery_failure,Toast.LENGTH_SHORT).show();
             }
 
         }
@@ -413,14 +406,14 @@ public class AddReceipt_Activity extends AppCompatActivity {
             image.compress(Bitmap.CompressFormat.JPEG, 60, out); // bmp is your Bitmap instance
             // PNG is a lossless format, the compression factor (100) is ignored
         } catch (Exception e) {
-            Toast.makeText(activity,"No se ha podido guardar la imagen",Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.add_receipt_failure_save_image,Toast.LENGTH_SHORT).show();
         } finally {
             try {
                 if (out != null) {
                     out.close();
                 }
             } catch (IOException e) {
-                Toast.makeText(activity,"El archivo de la imagen no se ha podido cerrar correctamente",Toast.LENGTH_SHORT).show();
+                Toast.makeText(activity, R.string.add_recipt_failure_file_save_image,Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -433,7 +426,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         }
         catch (FileNotFoundException e)
         {
-           Toast.makeText(activity,"No se ha podido cargar la imagen",Toast.LENGTH_SHORT).show();
+           Toast.makeText(activity, R.string.add_recipt_failure_load_image,Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -530,25 +523,19 @@ public class AddReceipt_Activity extends AppCompatActivity {
     private void dialogExitWithoutSave(){
         final AlertDialog.Builder mBuilderAlertDialog = new AlertDialog.Builder(activity, R.style.alert_dialog_gota);
         if(receta_edit!=null){
-            mBuilderAlertDialog.setTitle("Salir de Edición");
+            mBuilderAlertDialog.setTitle(R.string.add_receipt_alert_exit_without_save_title_edit);
         }else{
-            mBuilderAlertDialog.setTitle("Salir de Creación");
+            mBuilderAlertDialog.setTitle(R.string.add_receipt_alert_exit_without_save_title_create);
         }
-        mBuilderAlertDialog.setMessage("¿Seguro que desea salir? \nNo se guardará la receta que ha rellenado hasta ahora");
+        mBuilderAlertDialog.setMessage(R.string.add_receipt_alert_exit_without_save_message);
         mBuilderAlertDialog.setCancelable(true);
-        mBuilderAlertDialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
+        mBuilderAlertDialog.setPositiveButton(R.string.si, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if(receta_edit!=null){
-                    ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-                    Intent intent = new Intent(activity,vista_activity.getClass());
-                    intent.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta_edit));
-                    startActivity(intent);
-                }
                 activity.finish();
             }
         });
-        mBuilderAlertDialog.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+        mBuilderAlertDialog.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 dialogInterface.dismiss();
@@ -562,7 +549,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         Receipt receta =  new Receipt();
         //Nombre
         if(et_titulo.getText().toString().equals("")){
-            Toast.makeText(activity,"Sin un nombre de receta no se puede guardar nada",Toast.LENGTH_SHORT).show();
+            Toast.makeText(activity, R.string.add_receipt_message_no_title_receipt,Toast.LENGTH_SHORT).show();
             return;
         }
         receta.setName(et_titulo.getText().toString());
@@ -647,7 +634,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Guardando Receta");
+            pd.setMessage(getString(R.string.add_receipt_pd_saving_receipt));
             pd.show();
         }
 
@@ -657,6 +644,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
             try {
                 ReceiptDao dao = new ReceiptDao(db);
                 if(receta_edit!=null){
+                    receta.setId(receta_edit.getId());
                     dao.update(receta);
                 }else{
                     int id = dao.insert(receta);
@@ -686,16 +674,16 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 pd.dismiss();
             if(resul){
                 Toast.makeText(getApplicationContext()
-                        ,"Se ha guardado la receta"
+                        , R.string.add_receipt_ok_save
                         ,Toast.LENGTH_LONG).show();
-                ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
-                Intent i = new Intent(activity,vista_activity.getClass());
-                i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta));
-                startActivity(i);
+
+                Intent intent_resul = new Intent();
+                intent_resul.putExtra(ViewReceipt_Activity.ID_RECETA,receta);
+                setResult(RESULT_OK,intent_resul);
                 activity.finish();
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se ha guardado la receta! Error"
+                        , R.string.add_receipt_bad_save
                         ,Toast.LENGTH_LONG).show();
             }
         }
@@ -709,7 +697,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Cargando lista Grupos");
+            pd.setMessage(getString(R.string.add_receipt_pd_load_list));
             pd.show();
         }
 
@@ -750,7 +738,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 }
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se ha cargado la lista de grupos! Error"
+                        , R.string.add_receipt_message_error_loading_list
                         ,Toast.LENGTH_LONG).show();
                 activity.finish();
             }

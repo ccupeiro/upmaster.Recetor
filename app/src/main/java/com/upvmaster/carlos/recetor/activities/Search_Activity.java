@@ -164,7 +164,7 @@ public class Search_Activity extends AppCompatActivity {
         protected void onPreExecute() {
             pd = new ProgressDialog(activity);
             pd.setCancelable(false);
-            pd.setMessage("Cargando listas");
+            pd.setMessage(getString(R.string.search_message_loading));
             pd.show();
         }
 
@@ -192,7 +192,7 @@ public class Search_Activity extends AppCompatActivity {
                 inicializar_Lista();
             }else{
                 Toast.makeText(getApplicationContext()
-                        ,"No se han cargado las listas! Error"
+                        , R.string.search_error_loading
                         ,Toast.LENGTH_LONG).show();
                 activity.finish();
             }

@@ -1,10 +1,12 @@
 package com.upvmaster.carlos.recetor.entities;
 
+import java.io.Serializable;
+
 /**
  * Created by Carlos on 10/12/2016.
  */
 
-public class Variante {
+public class Variante implements Serializable {
     private int id;
     private String description;
 

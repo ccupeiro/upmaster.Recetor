@@ -16,8 +16,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:background="@android:color/holo_blue_light"
-            android:text="DESAYUNO"/>
+            android:background="@color/colorAccent"
+            android:text="@string/diet_desayuno"/>
 
     </LinearLayout>
     <LinearLayout
@@ -30,8 +30,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:background="@android:color/holo_green_light"
-            android:text="MEDIAMAÑANA"/>
+            android:background="@color/colorPrimary"
+            android:text="@string/diet_media_ma_ana"/>
 
     </LinearLayout>
     <LinearLayout
@@ -44,8 +44,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:background="@android:color/holo_orange_light"
-            android:text="COMIDA"/>
+            android:background="@color/colorAccent"
+            android:text="@string/diet_comida"/>
 
     </LinearLayout>
     <LinearLayout
@@ -58,8 +58,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:background="@android:color/holo_orange_dark"
-            android:text="MERIENDA"/>
+            android:background="@color/colorPrimary"
+            android:text="@string/diet_merienda"/>
 
     </LinearLayout>
     <LinearLayout
@@ -72,8 +72,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textAppearance="@android:style/TextAppearance.Large"
-            android:background="@android:color/holo_purple"
-            android:text="CENA"/>
+            android:background="@color/colorAccent"
+            android:text="@string/diet_cena"/>
 
     </LinearLayout>
 </LinearLayout>
