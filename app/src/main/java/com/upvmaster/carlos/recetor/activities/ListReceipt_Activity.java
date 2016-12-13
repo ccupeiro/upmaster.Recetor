@@ -3,8 +3,11 @@ package com.upvmaster.carlos.recetor.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -33,22 +36,26 @@ public class ListReceipt_Activity extends AppCompatActivity {
 
     private List<Receipt> alph_list;
     private List<Receipt> group_list;
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_receipt);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         inicializarToolbar();
-        new GetListTask().execute();
-    }
-
-    private void inicialirTabs(){
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Alph)));
         tabLayout.addTab(tabLayout.newTab().setText(getString(R.string.text_tab_Group)));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+    }
+
+    private void inicialirTabs(){
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pagina);
         final ViewTabAdapter adapter = new ViewTabAdapter
                 (getSupportFragmentManager(), tabLayout.getTabCount());
@@ -72,12 +79,21 @@ public class ListReceipt_Activity extends AppCompatActivity {
         });
     }
 
+    public boolean isSonidos() {
+        return sonidos;
+    }
+
+    public boolean isAnimado() {
+        return animado;
+    }
+
     private void inicializarToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         tv_titulo.setText("Listados");
@@ -87,6 +103,9 @@ public class ListReceipt_Activity extends AppCompatActivity {
         iv_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 activity.finish();
             }
         });
@@ -102,6 +121,9 @@ public class ListReceipt_Activity extends AppCompatActivity {
         iv_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzarAdd(null);
             }
         });
@@ -111,6 +133,9 @@ public class ListReceipt_Activity extends AppCompatActivity {
         iv_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_find(view);
             }
         });
@@ -120,6 +145,9 @@ public class ListReceipt_Activity extends AppCompatActivity {
         iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_config(view);
             }
         });
@@ -151,6 +179,21 @@ public class ListReceipt_Activity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        setPrefs();
+        new GetListTask().execute();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
     }
 
     private class GetListTask extends AsyncTask<Void,Void,Boolean>{

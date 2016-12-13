@@ -1,9 +1,17 @@
 package com.upvmaster.carlos.recetor.activities;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
+import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -28,8 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Dieta_Activity extends AppCompatActivity {
+    private static final int SOLICITUD_PERMISO_INTERNET = 300;
     private static final String RUTA_SERVER="http://upvccupeiro.esy.es/recetor";
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
     private Dieta dieta;
 
 
@@ -38,9 +49,33 @@ public class Dieta_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dieta);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         inicializarToolbar();
-        //TODO Pedir permiso de internet
-        new GetDietaTask().execute();
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
+            new GetDietaTask().execute();
+        }else{
+            solicitarPermisoInternet();
+        }
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
     }
 
     private void inicializarToolbar(){
@@ -49,6 +84,7 @@ public class Dieta_Activity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         tv_titulo.setText("DIETA");
@@ -58,6 +94,9 @@ public class Dieta_Activity extends AppCompatActivity {
         iv_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 activity.finish();
             }
         });
@@ -109,6 +148,36 @@ public class Dieta_Activity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void solicitarPermisoInternet() {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
+            Snackbar.make (activity.getCurrentFocus(), "Permiso Internet", Snackbar.LENGTH_INDEFINITE).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.INTERNET}, SOLICITUD_PERMISO_INTERNET);
+                }
+            }).show();
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, SOLICITUD_PERMISO_INTERNET);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case SOLICITUD_PERMISO_INTERNET:
+                if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    new GetDietaTask().execute();
+                } else {
+                    Snackbar.make(this.getCurrentFocus(), "No se puede utilizar la dieta sin el permiso de internet", Snackbar.LENGTH_SHORT).show();
+                    finish();
+                }
+                break;
+            default:
+                finish();
+                break;
+        }
     }
 
     private class GetDietaTask extends AsyncTask<Void,Void,Boolean> {

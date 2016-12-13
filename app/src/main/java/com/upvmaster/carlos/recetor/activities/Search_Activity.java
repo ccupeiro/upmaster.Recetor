@@ -3,9 +3,12 @@ package com.upvmaster.carlos.recetor.activities;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,7 +39,9 @@ import java.util.List;
 public class Search_Activity extends AppCompatActivity {
     private List<Receipt> alph_list;
     private List<Receipt> search_list;
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
 
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
@@ -47,11 +52,31 @@ public class Search_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         new GetListTask().execute();
         inicializarToolbar();
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setPrefs();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
+    }
 
     private void inicializarToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -59,12 +84,16 @@ public class Search_Activity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         // Icono atrás
         ImageView iv_atras = (ImageView) findViewById(R.id.iv_atras);
         iv_atras.setVisibility(View.VISIBLE);
         iv_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 activity.finish();
             }
         });
@@ -81,6 +110,10 @@ public class Search_Activity extends AppCompatActivity {
         adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    MediaPlayer mp_list = MediaPlayer.create(activity, R.raw.sonido_lista);
+                    mp_list.start();
+                }
                 int pos = recyclerView.getChildAdapterPosition(view);
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Receipt r = search_list.get(pos);

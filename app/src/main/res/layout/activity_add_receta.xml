@@ -44,7 +44,9 @@
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/cl_camara"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_margin"
+            android:layout_height="match_parent"
+            android:background="@drawable/background_camara"
             android:layout_weight="1">
 
             <ImageView
@@ -52,8 +54,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="centerInside"
+                android:layout_gravity="center"
                 android:src="@drawable/logo" />
-
             <ImageView
                 style="@style/ItemToolbar"
                 android:layout_width="wrap_content"
@@ -62,6 +64,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="top|end"
                 android:paddingEnd="0dp"
+                android:paddingTop="0dp"
                 android:src="@mipmap/ic_pencil_white_24dp"
                 android:tint="@android:color/black" />
         </android.support.design.widget.CoordinatorLayout>

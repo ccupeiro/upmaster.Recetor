@@ -2,8 +2,11 @@ package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -29,24 +32,50 @@ import java.util.List;
 
 public class ViewReceipt_Activity extends AppCompatActivity {
     public static final String ID_RECETA = "receta";
+    public static final String ID_VIENE_LISTA = "listado";
+    private int REQUEST_EDIT=1000;
     private Receipt receta;
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
     private String jsonReceta="";
+    private boolean vieneListado=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_receta);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         inicializarToolbar();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
+    }
+
+    public void setJsonReceta(String jsonReceta) {
+        this.jsonReceta = jsonReceta;
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        setPrefs();
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
             jsonReceta = extras.getString(ID_RECETA);
+            vieneListado = extras.getBoolean(ID_VIENE_LISTA);
         }else{
             Toast.makeText(this,getString(R.string.text_noReceta),Toast.LENGTH_SHORT).show();
             this.finish();
@@ -74,6 +103,7 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         tv_group.setText(UtilsReceipt.getGroupName(receta.getGroup(),activity));
         //Ingredientes
         LinearLayout tl_ingredientes = (LinearLayout) findViewById(R.id.tbl_ingredientes);
+        tl_ingredientes.removeAllViews();
         List<Ingrediente> ingredientes = receta.getList_ingredients();
         if(ingredientes!=null && ingredientes.size()>0){
             //Hay ingredientes
@@ -92,6 +122,7 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         }
         //Pasos
         LinearLayout tl_pasos = (LinearLayout) findViewById(R.id.tbl_pasos);
+        tl_pasos.removeAllViews();
         List<Step> pasos = receta.getList_steps();
         if(pasos!=null && ingredientes.size()>0){
             //Hay pasos
@@ -107,6 +138,7 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         }
         //Variantes
         LinearLayout tl_variantes = (LinearLayout) findViewById(R.id.tbl_variantes);
+        tl_variantes.removeAllViews();
         List<Variante> variantes = receta.getList_variantes();
         if(variantes!=null && variantes.size()>0){
             //Hay Variantes
@@ -123,12 +155,15 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         }
     }
 
+
+
     private void inicializarToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         tv_titulo.setText("Ver Receta");
@@ -138,6 +173,13 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         iv_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
+                if(vieneListado){
+                    Intent i = new Intent(activity, ListReceipt_Activity.class);
+                    startActivity(i);
+                }
                 activity.finish();
             }
         });
@@ -150,6 +192,9 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         iv_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_edit(view);
             }
         });
@@ -162,6 +207,9 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         iv_find.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_find(view);
             }
         });
@@ -171,6 +219,9 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_config(view);
             }
         });
@@ -190,5 +241,7 @@ public class ViewReceipt_Activity extends AppCompatActivity {
         Intent i = new Intent(activity,edit_activity.getClass());
         i.putExtra(AddReceipt_Activity.ID_EDIT_RECETA, jsonReceta);
         startActivity(i);
+        activity.finish();
     }
+
 }

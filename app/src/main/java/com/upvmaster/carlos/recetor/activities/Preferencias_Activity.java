@@ -1,7 +1,10 @@
 package com.upvmaster.carlos.recetor.activities;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
@@ -15,13 +18,17 @@ import com.upvmaster.carlos.recetor.fragments.PreferenciasFragment;
 
 public class Preferencias_Activity extends AppCompatActivity {
 
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferencias);
         activity = this;
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         inicializarToolbar();
         getFragmentManager()
                 .beginTransaction()
@@ -31,12 +38,32 @@ public class Preferencias_Activity extends AppCompatActivity {
                 .commit();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setPrefs();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
+    }
+
     private void inicializarToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         tv_titulo.setText("PREFERENCIAS");
@@ -46,6 +73,9 @@ public class Preferencias_Activity extends AppCompatActivity {
         iv_atras.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 activity.finish();
             }
         });

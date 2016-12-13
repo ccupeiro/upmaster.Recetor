@@ -44,6 +44,20 @@ public class GroupAdapter extends RecyclerView.Adapter<ReceiptHolder> implements
         holder.bind(receta,context);
     }
 
+    public List<Receipt> getItems() {
+        return lista_recetas;
+    }
+
+    public void removeItem(int position) {
+        lista_recetas.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public void addItem(int position, Receipt item) {
+        lista_recetas.add(position, item);
+        notifyDataSetChanged();
+    }
+
     @Override
     public long getHeaderId(int position) {
         Receipt receta = lista_recetas.get(position);

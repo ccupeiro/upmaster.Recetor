@@ -6,13 +6,16 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
@@ -79,7 +82,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
     private EditText et_titulo;
     private ImageView iv_imagen;
     private Spinner sp_group;
+    private boolean animado=true,sonidos=true;
     private Activity activity;
+    private SharedPreferences pref;
     private Receipt receta_edit=null;
     private int paso_sig=1;
 
@@ -88,6 +93,8 @@ public class AddReceipt_Activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_receta);
         //Mirar que no envien nada
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        setPrefs();
         String jsonReceta="";
         Bundle extras = getIntent().getExtras();
         if(extras!=null){
@@ -196,6 +203,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
+        final MediaPlayer mp_toolbar = MediaPlayer.create(activity, R.raw.sonido_toolbar);
         //Titulo
         TextView tv_titulo = (TextView) findViewById(R.id.tv_titulo_toolbar);
         if(receta_edit!=null){
@@ -211,6 +219,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Dialogo para salir sin guardar
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 dialogExitWithoutSave();
             }
         });
@@ -221,6 +232,9 @@ public class AddReceipt_Activity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Guardar la receta
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 saveReceipt();
             }
         });
@@ -239,9 +253,30 @@ public class AddReceipt_Activity extends AppCompatActivity {
         iv_config.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(sonidos){
+                    mp_toolbar.start();
+                }
                 lanzar_config(view);
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    private void setPrefs(){
+        if(pref.getBoolean("sonidos",true)){
+            sonidos = true;
+        }else{
+            sonidos = false;
+        }
+        if(pref.getBoolean("animaciones",true)){
+            animado = true;
+        }else{
+            animado = false;
+        }
     }
 
     private void lanzar_config(View view) {
@@ -287,7 +322,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 }
             }).show();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, SOLICITUD_PERMISO_CAMARA);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, SOLICITUD_PERMISO_CAMARA);
         }
     }
     private void solicitarPermisoExternalStorage() {
@@ -299,7 +334,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 }
             }).show();
         } else {
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, SOLICITUD_READ_EXTERNAL_STORAGE);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, SOLICITUD_READ_EXTERNAL_STORAGE);
         }
     }
 
@@ -453,7 +488,7 @@ public class AddReceipt_Activity extends AppCompatActivity {
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                tl_variante.removeView(ll_paso);
+                tl_pasos.removeView(ll_paso);
             }
         });
         if(paso!=null){
@@ -504,6 +539,12 @@ public class AddReceipt_Activity extends AppCompatActivity {
         mBuilderAlertDialog.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                if(receta_edit!=null){
+                    ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
+                    Intent intent = new Intent(activity,vista_activity.getClass());
+                    intent.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta_edit));
+                    startActivity(intent);
+                }
                 activity.finish();
             }
         });
@@ -647,7 +688,6 @@ public class AddReceipt_Activity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext()
                         ,"Se ha guardado la receta"
                         ,Toast.LENGTH_LONG).show();
-
                 ViewReceipt_Activity vista_activity = new ViewReceipt_Activity();
                 Intent i = new Intent(activity,vista_activity.getClass());
                 i.putExtra(ViewReceipt_Activity.ID_RECETA, new Gson().toJson(receta));

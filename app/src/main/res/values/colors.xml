@@ -10,6 +10,7 @@
     <color name="button_text_color">#ffffff</color>
     <color name="greyDark">#424242</color>
     <color name="cabecera">#bebbbb</color>
+    <color name="borrado">#FF0000</color>
 
     <!--PALETA POSIBLE!! -->
     <color name="posibles">#493F23</color>

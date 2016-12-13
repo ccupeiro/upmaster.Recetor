@@ -1,8 +1,5 @@
 package com.upvmaster.carlos.recetor.view;
 
-/**
- * Created by imena on 02/03/2016.
- */
 
 import android.content.Context;
 import android.content.res.TypedArray;
