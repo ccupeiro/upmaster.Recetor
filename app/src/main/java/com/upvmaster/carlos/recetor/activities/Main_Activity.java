@@ -26,6 +26,7 @@ import com.upvmaster.carlos.recetor.R;
 import com.upvmaster.carlos.recetor.bbdd.DBHelper;
 import com.upvmaster.carlos.recetor.bbdd.dao.ReceiptDao;
 import com.upvmaster.carlos.recetor.entities.Receipt;
+import com.upvmaster.carlos.recetor.utils.UtilsReceipt;
 
 public class Main_Activity extends AppCompatActivity {
 
@@ -185,6 +186,8 @@ public class Main_Activity extends AppCompatActivity {
     }
 
     private void lanzar_Dieta(View vista){
+        if(!animado)
+            UtilsReceipt.copiarBBDD(activity);
         Intent i = new Intent(this, Dieta_Activity.class);
         startActivity(i);
     }
